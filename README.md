@@ -1,0 +1,70 @@
+# SilvaItamar WebMCP Form Annotator
+
+[![License: GPL v2](https://img.shields.io/badge/License-GPL%20v2-blue.svg)](https://www.gnu.org/licenses/gpl-2.0.html)
+
+Anota formulários WordPress com atributos [WebMCP](https://developer.chrome.com/docs/ai/webmcp) declarativos (`toolname`, `tooldescription`, `toolparamdescription`) para que agentes de IA no navegador preencham formulários de lead e suporte com confiabilidade.
+
+**Autor:** [Itamar Silva](https://github.com/silvaitamar) · [Perfil WordPress](https://profiles.wordpress.org/itamarsilvacc/)
+
+**Status:** scaffold (`0.1.0-dev`). Adaptadores de form builders entram nas próximas fases.
+
+## O que faz
+
+Injeta anotações WebMCP no markup real do `<form>` (opt-in por formulário). Formulários de conversão e suporte **não** usam `toolautosubmit`: o humano confirma o envio.
+
+O que **não** faz:
+
+- não é um “WebMCP Bridge” REST para posts, menus ou carrinho WooCommerce;
+- não gera `llms.txt` nem substitui plugins de SEO/GEO;
+- não é um servidor MCP para IDEs (Cursor / Claude Desktop).
+
+O laboratório público de demos fica em [`wp-webmcp-forms`](https://github.com/silvaitamar/wp-webmcp-forms) e **não** é submetido ao WordPress.org.
+
+## Requisitos
+
+- WordPress 6.4+
+- PHP 8.0+
+
+Para testar tools hoje: Chrome com flag WebMCP (`chrome://flags/#enable-webmcp-testing`) ou token de Origin Trial, mais a extensão [Model Context Tool Inspector](https://chromewebstore.google.com/detail/gbpdfapgefenggkahomfgkhfehlcenpd).
+
+## Instalação
+
+### A partir do repositório
+
+```bash
+git clone https://github.com/silvaitamar/wp-webmcp-form-annotator.git
+cd wp-webmcp-form-annotator
+```
+
+Copie a pasta para `wp-content/plugins/silvaitamar-webmcp-form-annotator/` (ou use o clone diretamente nesse caminho) e ative em **Plugins**. Abra **Configurações → WebMCP Forms**.
+
+### A partir de uma release
+
+Quando houver ZIP em [Releases](https://github.com/silvaitamar/wp-webmcp-form-annotator/releases), extraia em `wp-content/plugins/` e ative o plugin.
+
+## Desenvolvimento
+
+```bash
+composer install
+composer lint   # PHPCS + WPCS, prefixo siwmfa
+```
+
+Estrutura principal:
+
+```text
+src/           Código PHP (PSR-4)
+silvaitamar-webmcp-form-annotator.php   Bootstrap
+readme.txt     Metadados para o WordPress.org (inglês)
+```
+
+## Empacotamento
+
+O ZIP de distribuição exclui `vendor/`, `.github/`, `composer.*`, `phpcs.xml.dist` e docs. Ver [`.distignore`](.distignore) e [`scripts/build-release-zip.sh`](scripts/build-release-zip.sh).
+
+## Licença
+
+GPL-2.0-or-later — veja [LICENSE](LICENSE).
+
+## Changelog
+
+Veja [CHANGELOG.md](CHANGELOG.md).

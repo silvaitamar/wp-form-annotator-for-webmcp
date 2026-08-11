@@ -1,0 +1,36 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          tools: composer
+
+      - name: Validate PHP syntax
+        run: find . -path ./vendor -prune -o -path ./.git -prune -o -name '*.php' -print0 | xargs -0 -n1 php -l
+
+      - name: Create distribution ZIP
+        run: bash scripts/build-release-zip.sh
+
+      - name: Upload release assets
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            silvaitamar-webmcp-form-annotator.zip
+          generate_release_notes: true

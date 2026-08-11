@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<ruleset name="SilvaItamar WebMCP Form Annotator">
+	<description>Coding standards for the SilvaItamar WebMCP Form Annotator plugin.</description>
+
+	<file>silvaitamar-webmcp-form-annotator.php</file>
+	<file>uninstall.php</file>
+	<file>src</file>
+
+	<arg name="extensions" value="php"/>
+	<arg name="colors"/>
+	<arg value="ps"/>
+
+	<rule ref="WordPress">
+		<!-- PSR-4 autoloading: file names mirror class names, not core's class-*.php scheme. -->
+		<exclude name="WordPress.Files.FileName"/>
+	</rule>
+
+	<config name="minimum_wp_version" value="6.4"/>
+
+	<rule ref="WordPress.WP.I18n">
+		<properties>
+			<property name="text_domain" type="array">
+				<element value="silvaitamar-webmcp-form-annotator"/>
+			</property>
+		</properties>
+	</rule>
+
+	<!-- Enforce a single, distinctive prefix on all global symbols, hooks and the namespace. -->
+	<rule ref="WordPress.NamingConventions.PrefixAllGlobals">
+		<properties>
+			<property name="prefixes" type="array">
+				<element value="siwmfa"/>
+				<element value="Siwmfa"/>
+			</property>
+		</properties>
+	</rule>
+</ruleset>

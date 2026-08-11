@@ -1,0 +1,37 @@
+{
+	"name": "silvaitamar/webmcp-form-annotator",
+	"description": "Annotate WordPress forms with declarative WebMCP attributes for browser AI agents.",
+	"type": "wordpress-plugin",
+	"license": "GPL-2.0-or-later",
+	"authors": [
+		{
+			"name": "Itamar Silva",
+			"homepage": "https://github.com/silvaitamar"
+		}
+	],
+	"require": {
+		"php": ">=8.0"
+	},
+	"require-dev": {
+		"squizlabs/php_codesniffer": "^3.9",
+		"wp-coding-standards/wpcs": "^3.1",
+		"dealerdirect/phpcodesniffer-composer-installer": "^1.0"
+	},
+	"autoload": {
+		"psr-4": {
+			"Siwmfa\\": "src/"
+		}
+	},
+	"config": {
+		"allow-plugins": {
+			"dealerdirect/phpcodesniffer-composer-installer": true
+		},
+		"platform": {
+			"php": "8.0"
+		}
+	},
+	"scripts": {
+		"lint": "phpcs",
+		"lint:fix": "phpcbf"
+	}
+}

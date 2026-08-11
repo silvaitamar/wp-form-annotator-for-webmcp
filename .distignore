@@ -1,0 +1,21 @@
+# Dev / packaging exclusions for distribution ZIP and WordPress.org.
+.github/
+.git/
+.wordpress-org/
+.gitignore
+.gitattributes
+.distignore
+node_modules/
+vendor/
+scripts/
+tests/
+composer.json
+composer.lock
+phpcs.xml.dist
+phpunit.xml.dist
+.phpunit.result.cache
+docs/
+*.md
+*.zip
+!readme.txt
+languages/.gitkeep

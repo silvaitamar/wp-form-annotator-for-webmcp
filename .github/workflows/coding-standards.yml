@@ -1,0 +1,29 @@
+name: Coding standards
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  phpcs:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          tools: composer
+
+      - name: Install dependencies
+        run: composer install --no-progress --prefer-dist
+
+      - name: Validate PHP syntax
+        run: |
+          find . -path ./vendor -prune -o -name '*.php' -print0 | xargs -0 -n1 php -l
+
+      - name: PHPCS (WPCS + PrefixAllGlobals)
+        run: composer lint
