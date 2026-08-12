@@ -2,7 +2,7 @@
 
 [![License: GPL v2 or later](https://img.shields.io/badge/License-GPL%20v2%20or%20later-blue.svg)](https://www.gnu.org/licenses/gpl-2.0.html)
 
-Anota formulários WordPress com atributos [WebMCP](https://developer.chrome.com/docs/ai/webmcp) declarativos (`toolname`, `tooldescription`, `toolparamdescription`) para que agentes de IA no navegador preencham formulários de lead e suporte com confiabilidade.
+Plugin WordPress que anota formulários já existentes com atributos [WebMCP](https://developer.chrome.com/docs/ai/webmcp) declarativos (`toolname`, `tooldescription`, `toolparamdescription`). Agentes de IA no navegador (Chrome com WebMCP) descobrem o form na página e preenchem lead/contato/suporte sem adivinhar o DOM. O visitante confirma o envio — não há `toolautosubmit`.
 
 **Autor:** [Itamar Silva](https://github.com/silvaitamar) · [Perfil WordPress](https://profiles.wordpress.org/itamarsilvacc/)
 
@@ -14,16 +14,25 @@ A ficha do diretório WordPress.org é o [`readme.txt`](readme.txt) (inglês). E
 
 Injeta anotações WebMCP no markup real do `<form>` (opt-in por formulário). Em **Configurações → WebMCP Forms** a lista filtra por builder/status, permite ativar em massa, e **Annotate** abre um form por vez (nome da tool, descrição e `toolparamdescription` dos campos). Token opcional de Chrome Origin Trial.
 
-Formulários de conversão e suporte **não** usam `toolautosubmit`: o humano confirma o envio.
+Não substitui o plugin de formulário: CF7, Fluent, WPForms e os demais continuam criando e processando o form.
 
 O que **não** faz:
 
 - não é um “WebMCP Bridge” REST para posts, menus ou carrinho WooCommerce;
 - não gera `llms.txt` nem substitui plugins de SEO/GEO;
-- não é um servidor MCP para IDEs (Cursor / Claude Desktop);
-- não implementa formulário de contato próprio — só anota forms dos builders suportados.
+- não é um servidor MCP para IDEs (Cursor / Claude Desktop) e não precisa de API key;
+- não implementa formulário de contato próprio — só anota forms dos builders suportados;
+- não envia o form sozinho (lead/contato/suporte nunca usam `toolautosubmit`).
 
 O laboratório público de demos fica em [`wp-webmcp-forms`](https://github.com/silvaitamar/wp-webmcp-forms) e **não** é submetido ao WordPress.org.
+
+## Perguntas frequentes
+
+**WebMCP é o mesmo que MCP do Cursor?** Não. WebMCP é API de browser na página. MCP de IDE é outro protocolo.
+
+**O agente envia o formulário sozinho?** Não. Lead, contato e suporte exigem confirmação humana.
+
+**Isso é plugin de SEO / `llms.txt`?** Não. Só anota o `<form>` para agentes no navegador.
 
 ## Requisitos
 

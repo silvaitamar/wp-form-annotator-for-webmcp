@@ -12,14 +12,21 @@ Annotate WordPress forms with declarative WebMCP attributes so browser AI agents
 
 == Description ==
 
-**SilvaItamar WebMCP Form Annotator** injects declarative [WebMCP](https://developer.chrome.com/docs/ai/webmcp) attributes (`toolname`, `tooldescription`, `toolparamdescription`) into real form markup so in-browser AI agents can discover and fill conversion and support forms without guessing the DOM.
+**SilvaItamar WebMCP Form Annotator** is a WordPress plugin that adds [declarative WebMCP](https://developer.chrome.com/docs/ai/webmcp) attributes (`toolname`, `tooldescription`, `toolparamdescription`) to existing contact and lead forms. In-browser AI agents (Chrome with WebMCP) can then discover those forms on the page and fill them without guessing the DOM.
+
+It is for site owners who already use a form plugin and want agents to fill lead, contact, or support requests. It does not replace your form plugin, and it does not submit the form for the visitor.
+
+= How it works =
+
+1. Create a form in a supported builder (Contact Form 7, Fluent Forms, WPForms, Forminator, Ninja Forms, or SureForms).
+2. Open **Settings → WebMCP Forms**, enable the form (one by one or in bulk), then **Annotate** to set the tool name, description, and field text.
+3. On the front end the plugin injects WebMCP attributes into the real `<form>` markup. Lead and support forms never use `toolautosubmit` — a human confirms send.
 
 = What this plugin does =
 
-* Opt-in annotation per form.
-* A settings list under **Settings → WebMCP Forms** with search, builder/status filters, pagination, and bulk enable/disable.
-* A single-form editor (**Annotate**) for the tool name, description, and field text.
-* No `toolautosubmit` on lead, contact, or support forms — a human confirms submit.
+* Opt-in annotation per form (nothing is annotated until you enable it).
+* A settings list with search, builder/status filters, pagination, and bulk enable/disable.
+* A single-form editor for tool name, tool description, and per-field `toolparamdescription`.
 * Optional Chrome Origin Trial token (printed in `wp_head` when set).
 * Soft dependencies: each adapter loads only when that form plugin is active.
 
@@ -30,15 +37,15 @@ Contact Form 7, Fluent Forms, WPForms, Forminator, Ninja Forms, and SureForms. Y
 = What this plugin does not do =
 
 * It is not a REST “WebMCP Bridge” for posts, menus, or WooCommerce cart tools.
-* It does not generate `llms.txt` or replace SEO/GEO plugins.
+* It does not generate `llms.txt` and it is not an SEO or GEO plugin.
 * It is not an MCP server for IDE clients (Cursor, Claude Desktop, and similar).
+* It does not auto-submit lead, contact, or support forms.
 
 = Requirements =
 
-* WordPress 6.4 or later
-* PHP 8.0 or later
+* WordPress 6.4 or later and PHP 8.0 or later
 * At least one supported form plugin with a published form
-* To test tools today: Chrome with the WebMCP flag (`chrome://flags/#enable-webmcp-testing`) or a valid Origin Trial token, plus a WebMCP inspector extension
+* To test tools today: Chrome with `chrome://flags/#enable-webmcp-testing` or a valid Origin Trial token, plus a WebMCP inspector extension
 
 == Installation ==
 
@@ -49,21 +56,37 @@ Contact Form 7, Fluent Forms, WPForms, Forminator, Ninja Forms, and SureForms. Y
 
 == Frequently Asked Questions ==
 
+= What is WebMCP on a WordPress site? =
+
+[WebMCP](https://developer.chrome.com/docs/ai/webmcp) is a browser API: the page declares tools in HTML. This plugin adds those attributes to WordPress forms so an in-browser agent can fill a contact or lead form from the current page.
+
 = Is WebMCP the same as MCP for Cursor or Claude? =
 
-No. WebMCP is a browser API for tools on the page. MCP servers for IDEs are a different protocol.
+No. WebMCP runs in the browser, on the page. MCP servers for IDEs (Cursor, Claude Desktop) are a different protocol. This plugin is not an MCP server and does not need an API key.
 
-= Which form plugins are supported? =
+= Can a browser AI agent fill my WordPress contact form? =
 
-Contact Form 7, Fluent Forms, WPForms, Forminator, Ninja Forms, and SureForms. If a builder is not active, its adapter does not load.
+Yes, after you enable that form in **Settings → WebMCP Forms** and annotate it. The agent sees `toolname`, `tooldescription`, and `toolparamdescription` on the real form. The visitor still confirms submit.
+
+= Does this plugin submit the form automatically? =
+
+No. Lead, contact, and support forms never get `toolautosubmit`. The human confirms the send.
+
+= Do I need ChatGPT, an MCP server, or a REST API? =
+
+No. Annotation is HTML on the form. Testing today uses Chrome with the WebMCP flag (or an Origin Trial token) and an inspector extension.
+
+= Does this replace Contact Form 7, Fluent Forms, or WPForms? =
+
+No. Those plugins still create and process the form. This plugin only adds WebMCP attributes when you enable a form. If a builder is not active, its adapter does not load.
+
+= Is this an SEO plugin? Does it generate llms.txt? =
+
+No. It does not write `llms.txt`, sitemaps, or schema for search engines. It annotates forms for in-browser agents. The Lighthouse Agentic Browsing audit `webmcp-form-coverage` looks for these attributes on the real `<form>`; the plugin does not guarantee a score.
 
 = How do I test annotations in the browser? =
 
 Use Chrome with `chrome://flags/#enable-webmcp-testing` (or an Origin Trial token under **Settings → WebMCP Forms → Origin Trial**) and a WebMCP inspector extension. Enable a form, view it on the front end, and confirm `toolname`, `tooldescription`, and `toolparamdescription` on the markup.
-
-= Will this pass Lighthouse Agentic Browsing form coverage? =
-
-Declarative attributes on the real `<form>` are what the `webmcp-form-coverage` audit looks for. Enable a form in **Settings → WebMCP Forms**. This plugin does not guarantee a specific Lighthouse score.
 
 = How do I translate this plugin? =
 
