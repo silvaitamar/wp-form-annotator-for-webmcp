@@ -2,7 +2,7 @@
 /**
  * Playground / preview seed: one Fluent Forms contact form, already annotated.
  *
- * Dual-use: Playground runPHP (loads wp-load) and `studio wp eval-file` (ABSPATH set).
+ * Dual-use: Playground runPHP (loads wp-load) and WP-CLI eval-file (ABSPATH set).
  *
  * @package Siwmfa
  */

@@ -5,3 +5,8 @@
 /docs/QA.md
 .DS_Store
 Thumbs.db
+
+# Studio/phase helpers — stay on disk for local QA, not on public GitHub.
+/scripts/smoke-*.php
+/scripts/setup-phase-*.php
+/scripts/run-phase-d.sh
