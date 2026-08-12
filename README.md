@@ -52,6 +52,8 @@ bash scripts/build-release-zip.sh
 bash scripts/validate-release-zip.sh
 ```
 
+O que vai ao WordPress.org (`readme.txt`, UI do plugin, blueprint/assets) e as notas versionadas em `docs/` ficam em **inglês**. Checklist de QA manual: `docs/QA.md` (pt-BR, arquivo local, fora do git).
+
 Estrutura principal:
 
 ```text
