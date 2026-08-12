@@ -231,7 +231,7 @@ final class Registry {
 	public static function suggest_description( string $title ): string {
 		$title = \wp_strip_all_tags( $title );
 		if ( '' === $title ) {
-			$title = 'contact';
+			$title = \__( 'contact form', 'silvaitamar-webmcp-form-annotator' );
 		}
 
 		return \sprintf(

@@ -86,13 +86,13 @@ final class Form_Editor {
 
 			<?php if ( array() !== $form['fields'] ) : ?>
 				<h3><?php echo \esc_html__( 'Field descriptions', 'silvaitamar-webmcp-form-annotator' ); ?></h3>
-				<p class="description"><?php echo \esc_html__( 'These become toolparamdescription on each control. Use the HTML name as shown.', 'silvaitamar-webmcp-form-annotator' ); ?></p>
+				<p class="description"><?php echo \esc_html__( 'These become the toolparamdescription attribute on each control. Use the HTML name as shown.', 'silvaitamar-webmcp-form-annotator' ); ?></p>
 				<table class="widefat striped siwmfa-fields">
 					<thead>
 						<tr>
 							<th><?php echo \esc_html__( 'Field', 'silvaitamar-webmcp-form-annotator' ); ?></th>
 							<th><?php echo \esc_html__( 'Label', 'silvaitamar-webmcp-form-annotator' ); ?></th>
-							<th><?php echo \esc_html__( 'toolparamdescription', 'silvaitamar-webmcp-form-annotator' ); ?></th>
+							<th><?php echo \esc_html_x( 'toolparamdescription', 'Column header: WebMCP HTML attribute name on form fields', 'silvaitamar-webmcp-form-annotator' ); ?></th>
 						</tr>
 					</thead>
 					<tbody>
@@ -112,6 +112,8 @@ final class Form_Editor {
 					<?php endforeach; ?>
 					</tbody>
 				</table>
+			<?php else : ?>
+				<p class="description"><?php echo \esc_html__( 'This form has no annotatable fields.', 'silvaitamar-webmcp-form-annotator' ); ?></p>
 			<?php endif; ?>
 
 			<?php \submit_button( \__( 'Save annotations', 'silvaitamar-webmcp-form-annotator' ), 'primary', 'siwmfa_save_form' ); ?>

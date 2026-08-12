@@ -98,17 +98,17 @@ final class Form_Catalog {
 	public static function builder_label( string $builder ): string {
 		switch ( $builder ) {
 			case Contact_Form_7::BUILDER:
-				return 'Contact Form 7';
+				return \__( 'Contact Form 7', 'silvaitamar-webmcp-form-annotator' );
 			case Fluent_Forms::BUILDER:
-				return 'Fluent Forms';
+				return \__( 'Fluent Forms', 'silvaitamar-webmcp-form-annotator' );
 			case WPForms::BUILDER:
-				return 'WPForms';
+				return \__( 'WPForms', 'silvaitamar-webmcp-form-annotator' );
 			case Forminator::BUILDER:
-				return 'Forminator';
+				return \__( 'Forminator', 'silvaitamar-webmcp-form-annotator' );
 			case Ninja_Forms::BUILDER:
-				return 'Ninja Forms';
+				return \__( 'Ninja Forms', 'silvaitamar-webmcp-form-annotator' );
 			case SureForms::BUILDER:
-				return 'SureForms';
+				return \__( 'SureForms', 'silvaitamar-webmcp-form-annotator' );
 			default:
 				return $builder;
 		}

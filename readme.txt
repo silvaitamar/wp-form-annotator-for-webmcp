@@ -50,6 +50,10 @@ No. WebMCP is a browser API for tools on the page. MCP servers for IDEs are a di
 
 Declarative attributes on the real `<form>` are what the `webmcp-form-coverage` audit looks for. Enable a form in **Settings → WebMCP Forms**.
 
+= How do I translate this plugin? =
+
+Translations are managed on [translate.wordpress.org](https://translate.wordpress.org/) after the plugin is listed. Language packs install automatically — do not bundle `.mo` files for locales that already have a pack.
+
 = Can I remove “SilvaItamar” from the plugin name later? =
 
 Yes. After WordPress.org approval, a display-name-only update can rename it to **WebMCP Form Annotator** without changing the slug or internal prefix (same approach as our other directory plugins).

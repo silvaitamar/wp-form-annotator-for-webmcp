@@ -104,6 +104,7 @@ final class Form_List {
 				<thead>
 					<tr>
 						<td class="manage-column column-cb check-column">
+							<label class="screen-reader-text" for="cb-select-all-1"><?php echo \esc_html__( 'Select all', 'silvaitamar-webmcp-form-annotator' ); ?></label>
 							<input id="cb-select-all-1" type="checkbox" />
 						</td>
 						<th scope="col"><?php echo \esc_html__( 'Form', 'silvaitamar-webmcp-form-annotator' ); ?></th>
@@ -277,7 +278,21 @@ final class Form_List {
 		?>
 		<tr>
 			<th scope="row" class="check-column">
-				<input type="checkbox" name="siwmfa_keys[]" value="<?php echo \esc_attr( $key ); ?>" />
+				<?php
+				$cb_id = 'cb-select-' . \sanitize_html_class( $key );
+				?>
+				<label class="screen-reader-text" for="<?php echo \esc_attr( $cb_id ); ?>">
+					<?php
+					echo \esc_html(
+						\sprintf(
+							/* translators: %s: form title */
+							\__( 'Select %s', 'silvaitamar-webmcp-form-annotator' ),
+							$form['title']
+						)
+					);
+					?>
+				</label>
+				<input id="<?php echo \esc_attr( $cb_id ); ?>" type="checkbox" name="siwmfa_keys[]" value="<?php echo \esc_attr( $key ); ?>" />
 			</th>
 			<td class="column-title has-row-actions column-primary">
 				<strong><a class="row-title" href="<?php echo \esc_url( $edit_url ); ?>"><?php echo \esc_html( $form['title'] ); ?></a></strong>
