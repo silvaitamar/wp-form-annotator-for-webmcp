@@ -4,7 +4,7 @@ Tags: webmcp, ai agents, forms, agentic, lighthouse
 Requires at least: 6.4
 Tested up to: 7.0
 Requires PHP: 8.0
-Stable tag: 0.3.0-dev
+Stable tag: 1.0.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -56,23 +56,13 @@ Yes. After WordPress.org approval, a display-name-only update can rename it to *
 
 == Changelog ==
 
-= 0.3.0-dev =
-* Adapters for WPForms, Forminator, Ninja Forms, and SureForms.
-* Execute Tool fixture matrix for each builder.
+= 1.0.0 =
+* First public release: opt-in WebMCP annotation for Contact Form 7, Fluent Forms, WPForms, Forminator, Ninja Forms, and SureForms.
 * Settings list with search, filters, pagination, and a single-form editor.
-
-= 0.2.0-dev =
-* Opt-in declarative annotation for Contact Form 7 and Fluent Forms.
-* Per-form tool name, description, and field `toolparamdescription`.
-* Origin Trial token output in `wp_head`.
-
-= 0.1.0-dev =
-* Scaffold: bootstrap, settings page, PHPCS/WPCS prefix `siwmfa`, packaging stubs.
+* Optional Chrome Origin Trial token.
+* Lead and support forms never auto-submit.
 
 == Upgrade Notice ==
 
-= 0.3.0-dev =
-Development build: remaining v1 form builders. Not a WordPress.org release yet.
-
-= 0.2.0-dev =
-Development build: CF7 and Fluent Forms adapters. Not a WordPress.org release yet.
+= 1.0.0 =
+First public release. Annotate existing form-plugin markup with declarative WebMCP attributes.

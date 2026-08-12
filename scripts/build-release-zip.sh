@@ -13,7 +13,7 @@ mkdir -p "${STAGE}/${SLUG}"
 # Copy tracked files except those listed in .distignore.
 cd "${ROOT}"
 if command -v git >/dev/null 2>&1 && git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
-  git ls-files -z | while IFS= read -r -d '' f; do
+  git ls-files -co --exclude-standard -z | while IFS= read -r -d '' f; do
     skip=0
     while IFS= read -r pattern || [[ -n "${pattern}" ]]; do
       [[ -z "${pattern}" || "${pattern}" =~ ^# ]] && continue

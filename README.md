@@ -6,7 +6,7 @@ Anota formulários WordPress com atributos [WebMCP](https://developer.chrome.com
 
 **Autor:** [Itamar Silva](https://github.com/silvaitamar) · [Perfil WordPress](https://profiles.wordpress.org/itamarsilvacc/)
 
-**Status:** `0.3.0-dev` — anotação opt-in para CF7, Fluent Forms, WPForms, Forminator, Ninja Forms e SureForms.
+**Status:** `1.0.0` — anotação opt-in para CF7, Fluent Forms, WPForms, Forminator, Ninja Forms e SureForms.
 
 ## O que faz
 
@@ -48,6 +48,8 @@ Quando houver ZIP em [Releases](https://github.com/silvaitamar/wp-webmcp-form-an
 ```bash
 composer install
 composer lint   # PHPCS + WPCS, prefixo siwmfa
+bash scripts/build-release-zip.sh
+bash scripts/validate-release-zip.sh
 ```
 
 Estrutura principal:
@@ -61,6 +63,8 @@ readme.txt     Metadados para o WordPress.org (inglês)
 ## Empacotamento
 
 O ZIP de distribuição exclui `vendor/`, `.github/`, `composer.*`, `phpcs.xml.dist` e docs. Ver [`.distignore`](.distignore) e [`scripts/build-release-zip.sh`](scripts/build-release-zip.sh).
+
+Live Preview (após aprovação wp.org): [`.wordpress-org/blueprints/blueprint.json`](.wordpress-org/blueprints/blueprint.json) — Fluent Forms + login no admin + form já anotado. SVN: `assets/blueprints/blueprint.json`. O diretório injeta este plugin; o blueprint não instala o próprio slug.
 
 ## Licença
 

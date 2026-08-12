@@ -5,20 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [1.0.0] - 2026-08-11
 
 ### Added
 
-- Settings list: search, builder/status filters, pagination, bulk enable/disable, and a single-form editor.
-- Phase C: adapters for WPForms, Forminator, Ninja Forms, and SureForms.
-- Execute Tool fixture matrix under `docs/fixtures/`.
-- Phase B: opt-in declarative annotation for Contact Form 7 and Fluent Forms.
+- Opt-in declarative WebMCP annotation for Contact Form 7, Fluent Forms, WPForms, Forminator, Ninja Forms, and SureForms.
+- Settings list with search, builder/status filters, pagination, bulk enable/disable, and a single-form editor.
 - Per-form tool name, description, and field `toolparamdescription`.
-- Origin Trial token printed in `wp_head`.
-- Phase A scaffold: bootstrap, Settings page (Origin Trial token), PHPCS/WPCS with `siwmfa` prefix, packaging stubs.
+- Optional Chrome Origin Trial token in `wp_head`.
+- Execute Tool fixture matrix under `docs/fixtures/`.
 
-### Removed
+### Notes
 
-- Native `[siwmfa_contact]` shortcode — out of product scope (lab-only).
+- Lead and support forms never use `toolautosubmit`.
+- This plugin does not ship a contact form (lab-only in `wp-webmcp-forms`).
 
-[Unreleased]: https://github.com/silvaitamar/wp-webmcp-form-annotator/compare/HEAD...HEAD
+[1.0.0]: https://github.com/silvaitamar/wp-webmcp-form-annotator/releases/tag/v1.0.0
