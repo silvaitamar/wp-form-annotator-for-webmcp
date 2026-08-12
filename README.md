@@ -6,7 +6,7 @@ Anota formulários WordPress com atributos [WebMCP](https://developer.chrome.com
 
 **Autor:** [Itamar Silva](https://github.com/silvaitamar) · [Perfil WordPress](https://profiles.wordpress.org/itamarsilvacc/)
 
-**Status:** scaffold (`0.1.0-dev`). Adaptadores de form builders entram nas próximas fases.
+**Status:** `0.3.0-dev` — anotação opt-in para CF7, Fluent Forms, WPForms, Forminator, Ninja Forms e SureForms.
 
 ## O que faz
 
@@ -16,7 +16,8 @@ O que **não** faz:
 
 - não é um “WebMCP Bridge” REST para posts, menus ou carrinho WooCommerce;
 - não gera `llms.txt` nem substitui plugins de SEO/GEO;
-- não é um servidor MCP para IDEs (Cursor / Claude Desktop).
+- não é um servidor MCP para IDEs (Cursor / Claude Desktop);
+- não implementa formulário de contato próprio — só anota forms dos builders suportados.
 
 O laboratório público de demos fica em [`wp-webmcp-forms`](https://github.com/silvaitamar/wp-webmcp-forms) e **não** é submetido ao WordPress.org.
 
@@ -36,7 +37,7 @@ git clone https://github.com/silvaitamar/wp-webmcp-form-annotator.git
 cd wp-webmcp-form-annotator
 ```
 
-Copie a pasta para `wp-content/plugins/silvaitamar-webmcp-form-annotator/` (ou use o clone diretamente nesse caminho) e ative em **Plugins**. Abra **Configurações → WebMCP Forms**.
+Copie a pasta para `wp-content/plugins/silvaitamar-webmcp-form-annotator/` (ou use o clone diretamente nesse caminho) e ative em **Plugins**. Instale um dos builders suportados e abra **Configurações → WebMCP Forms** para ativar a anotação.
 
 ### A partir de uma release
 
