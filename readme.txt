@@ -38,7 +38,7 @@ Annotate WordPress forms with declarative WebMCP attributes so browser AI agents
 
 1. Upload the `silvaitamar-webmcp-form-annotator` folder to `/wp-content/plugins/`.
 2. Activate the plugin through the **Plugins** screen.
-3. Open **Settings → WebMCP Forms**, enable a form, and set the tool name/description.
+3. Open **Settings → WebMCP Forms**, find the form in the list (search or filter by builder), enable it, then **Annotate** to set the tool name, description, and field text.
 
 == Frequently Asked Questions ==
 
@@ -59,6 +59,7 @@ Yes. After WordPress.org approval, a display-name-only update can rename it to *
 = 0.3.0-dev =
 * Adapters for WPForms, Forminator, Ninja Forms, and SureForms.
 * Execute Tool fixture matrix for each builder.
+* Settings list with search, filters, pagination, and a single-form editor.
 
 = 0.2.0-dev =
 * Opt-in declarative annotation for Contact Form 7 and Fluent Forms.

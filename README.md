@@ -37,7 +37,7 @@ git clone https://github.com/silvaitamar/wp-webmcp-form-annotator.git
 cd wp-webmcp-form-annotator
 ```
 
-Copie a pasta para `wp-content/plugins/silvaitamar-webmcp-form-annotator/` (ou use o clone diretamente nesse caminho) e ative em **Plugins**. Instale um dos builders suportados e abra **Configurações → WebMCP Forms** para ativar a anotação.
+Copie a pasta para `wp-content/plugins/silvaitamar-webmcp-form-annotator/` (ou use o clone diretamente nesse caminho) e ative em **Plugins**. Instale um dos builders suportados e abra **Configurações → WebMCP Forms**: a lista filtra por builder/status, e **Annotate** abre um form por vez.
 
 ### A partir de uma release
 

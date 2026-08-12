@@ -39,6 +39,41 @@ final class Form_Catalog {
 	}
 
 	/**
+	 * Finds one discovered form.
+	 *
+	 * @param string $builder Builder slug.
+	 * @param int    $id      Form ID.
+	 * @return array{builder: string, id: int, title: string, fields: array<string, string>}|null
+	 */
+	public static function find( string $builder, int $id ): ?array {
+		foreach ( self::discover() as $form ) {
+			if ( $form['builder'] === $builder && $form['id'] === $id ) {
+				return $form;
+			}
+		}
+
+		return null;
+	}
+
+	/**
+	 * Builder slugs present in a form list.
+	 *
+	 * @param list<array{builder: string, id: int, title: string, fields: array<string, string>}> $forms Forms.
+	 * @return array<string, string> Slug => label.
+	 */
+	public static function builders_in( array $forms ): array {
+		$out = array();
+		foreach ( $forms as $form ) {
+			$slug = $form['builder'];
+			if ( ! isset( $out[ $slug ] ) ) {
+				$out[ $slug ] = self::builder_label( $slug );
+			}
+		}
+
+		return $out;
+	}
+
+	/**
 	 * Adapter classes that can contribute forms.
 	 *
 	 * @return list<class-string>

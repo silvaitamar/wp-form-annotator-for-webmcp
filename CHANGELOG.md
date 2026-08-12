@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Settings list: search, builder/status filters, pagination, bulk enable/disable, and a single-form editor.
 - Phase C: adapters for WPForms, Forminator, Ninja Forms, and SureForms.
 - Execute Tool fixture matrix under `docs/fixtures/`.
 - Phase B: opt-in declarative annotation for Contact Form 7 and Fluent Forms.

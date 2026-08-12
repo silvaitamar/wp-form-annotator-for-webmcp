@@ -90,6 +90,51 @@ final class Registry {
 	}
 
 	/**
+	 * Merges one sanitized form config into the stored registry.
+	 *
+	 * @param string               $key Registry key.
+	 * @param array<string, mixed> $row Raw row.
+	 * @return bool
+	 */
+	public static function save_one( string $key, array $row ): bool {
+		$parts = self::parse_key( $key );
+		if ( null === $parts ) {
+			return false;
+		}
+
+		$all         = self::get_all();
+		$all[ $key ] = self::normalize( $row );
+		\update_option( self::OPTION_KEY, $all, false );
+
+		return true;
+	}
+
+	/**
+	 * Toggles annotation without wiping tool name or field descriptions.
+	 *
+	 * @param string $key     Registry key.
+	 * @param bool   $enabled Whether the form is enabled.
+	 * @param string $title   Form title used for suggestions when enabling a blank row.
+	 * @return bool
+	 */
+	public static function set_enabled( string $key, bool $enabled, string $title = '' ): bool {
+		$parts = self::parse_key( $key );
+		if ( null === $parts ) {
+			return false;
+		}
+
+		$current            = self::get( $parts['builder'], $parts['id'] );
+		$current['enabled'] = $enabled;
+
+		if ( $enabled && '' === $current['toolname'] ) {
+			$current['toolname']        = self::suggest_toolname( $title );
+			$current['tooldescription'] = self::suggest_description( $title );
+		}
+
+		return self::save_one( $key, $current );
+	}
+
+	/**
 	 * Parses a registry key.
 	 *
 	 * @param string $key Key in `{builder}:{id}` form.

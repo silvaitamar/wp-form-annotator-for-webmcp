@@ -1,6 +1,6 @@
 <?php
 /**
- * Settings screen: Origin Trial token + per-form opt-in.
+ * Settings screen: form list, editor, Origin Trial.
  *
  * @package Siwmfa
  */
@@ -18,6 +18,7 @@ defined( 'ABSPATH' ) || exit;
 final class Settings {
 
 	public const OPTION_KEY = 'siwmfa_settings';
+	public const PAGE_SLUG  = 'siwmfa-settings';
 
 	/**
 	 * Hooks the settings screen.
@@ -27,7 +28,10 @@ final class Settings {
 	public static function register(): void {
 		\add_action( 'admin_menu', array( self::class, 'add_menu' ) );
 		\add_action( 'admin_init', array( self::class, 'register_settings' ) );
-		\add_action( 'admin_init', array( self::class, 'handle_forms_save' ) );
+		\add_action( 'admin_init', array( self::class, 'handle_form_save' ) );
+		\add_action( 'admin_init', array( self::class, 'handle_bulk' ) );
+		\add_action( 'admin_init', array( self::class, 'handle_toggle' ) );
+		\add_action( 'admin_enqueue_scripts', array( self::class, 'enqueue' ) );
 	}
 
 	/**
@@ -40,8 +44,27 @@ final class Settings {
 			\__( 'WebMCP Form Annotator', 'silvaitamar-webmcp-form-annotator' ),
 			\__( 'WebMCP Forms', 'silvaitamar-webmcp-form-annotator' ),
 			'manage_options',
-			'siwmfa-settings',
+			self::PAGE_SLUG,
 			array( self::class, 'render_page' )
+		);
+	}
+
+	/**
+	 * Enqueues admin CSS on this plugin’s screen.
+	 *
+	 * @param string $hook Current admin hook.
+	 * @return void
+	 */
+	public static function enqueue( string $hook ): void {
+		if ( 'settings_page_' . self::PAGE_SLUG !== $hook ) {
+			return;
+		}
+
+		\wp_enqueue_style(
+			'siwmfa-admin',
+			\SIWMFA_PLUGIN_URL . 'assets/css/admin.css',
+			array(),
+			\SIWMFA_VERSION
 		);
 	}
 
@@ -87,12 +110,12 @@ final class Settings {
 	}
 
 	/**
-	 * Saves per-form annotation rows.
+	 * Saves annotations for one form.
 	 *
 	 * @return void
 	 */
-	public static function handle_forms_save(): void {
-		if ( ! isset( $_POST['siwmfa_save_forms'] ) ) {
+	public static function handle_form_save(): void {
+		if ( ! isset( $_POST['siwmfa_save_form'] ) ) {
 			return;
 		}
 
@@ -100,28 +123,156 @@ final class Settings {
 			return;
 		}
 
-		\check_admin_referer( 'siwmfa_save_forms' );
+		\check_admin_referer( 'siwmfa_save_form' );
 
+		$key = isset( $_POST['siwmfa_form_key'] ) ? \sanitize_text_field( \wp_unslash( (string) $_POST['siwmfa_form_key'] ) ) : '';
 		$raw = array();
-		if ( isset( $_POST['siwmfa_forms'] ) && \is_array( $_POST['siwmfa_forms'] ) ) { // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Registry::save_all().
-			$raw = \wp_unslash( $_POST['siwmfa_forms'] ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Registry::save_all().
-			if ( ! \is_array( $raw ) ) {
-				$raw = array();
+		if ( isset( $_POST['siwmfa_forms'] ) && \is_array( $_POST['siwmfa_forms'] ) ) { // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Registry::save_one().
+			$posted = \wp_unslash( $_POST['siwmfa_forms'] ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Registry::save_one().
+			if ( \is_array( $posted ) && isset( $posted[ $key ] ) && \is_array( $posted[ $key ] ) ) {
+				$raw = $posted[ $key ];
 			}
 		}
 
-		Registry::save_all( $raw );
+		if ( '' === $key || ! Registry::save_one( $key, $raw ) ) {
+			return;
+		}
 
 		\wp_safe_redirect(
 			\add_query_arg(
 				array(
-					'page'           => 'siwmfa-settings',
-					'siwmfa_updated' => '1',
+					'siwmfa_updated' => 'form',
+					'siwmfa_form'    => $key,
+					'siwmfa_tab'     => 'forms',
 				),
-				\admin_url( 'options-general.php' )
+				self::page_url()
 			)
 		);
 		exit;
+	}
+
+	/**
+	 * Bulk enable/disable.
+	 *
+	 * @return void
+	 */
+	public static function handle_bulk(): void {
+		if ( ! isset( $_POST['siwmfa_bulk_apply'] ) ) {
+			return;
+		}
+
+		if ( ! \current_user_can( 'manage_options' ) ) {
+			return;
+		}
+
+		\check_admin_referer( 'siwmfa_bulk_forms' );
+
+		$action = isset( $_POST['siwmfa_bulk'] ) ? \sanitize_key( \wp_unslash( (string) $_POST['siwmfa_bulk'] ) ) : '';
+		if ( ! \in_array( $action, array( 'enable', 'disable' ), true ) ) {
+			return;
+		}
+
+		$keys = array();
+		if ( isset( $_POST['siwmfa_keys'] ) && \is_array( $_POST['siwmfa_keys'] ) ) {
+			foreach ( \wp_unslash( $_POST['siwmfa_keys'] ) as $key ) { // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- sanitized per item.
+				if ( \is_string( $key ) ) {
+					$keys[] = \sanitize_text_field( $key );
+				}
+			}
+		}
+
+		$enable = 'enable' === $action;
+		foreach ( $keys as $key ) {
+			$parts = Registry::parse_key( $key );
+			if ( null === $parts ) {
+				continue;
+			}
+			$form  = Form_Catalog::find( $parts['builder'], $parts['id'] );
+			$title = null !== $form ? $form['title'] : '';
+			Registry::set_enabled( $key, $enable, $title );
+		}
+
+		\wp_safe_redirect( \add_query_arg( 'siwmfa_updated', 'bulk', self::page_url( array( 'siwmfa_tab' => 'forms' ) ) ) );
+		exit;
+	}
+
+	/**
+	 * Row-action enable/disable.
+	 *
+	 * @return void
+	 */
+	public static function handle_toggle(): void {
+		if ( ! isset( $_GET['page'] ) || self::PAGE_SLUG !== \sanitize_key( \wp_unslash( (string) $_GET['page'] ) ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- page gate.
+			return;
+		}
+
+		if ( ! isset( $_GET['siwmfa_toggle'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- checked below.
+			return;
+		}
+
+		if ( ! \current_user_can( 'manage_options' ) ) {
+			return;
+		}
+
+		\check_admin_referer( 'siwmfa_toggle' );
+
+		$key = \sanitize_text_field( \wp_unslash( (string) $_GET['siwmfa_toggle'] ) );
+		$on  = false;
+		if ( isset( $_GET['siwmfa_on'] ) ) {
+			$on = '1' === \sanitize_text_field( \wp_unslash( (string) $_GET['siwmfa_on'] ) );
+		}
+		$parts = Registry::parse_key( $key );
+		if ( null === $parts ) {
+			return;
+		}
+
+		$form  = Form_Catalog::find( $parts['builder'], $parts['id'] );
+		$title = null !== $form ? $form['title'] : '';
+		Registry::set_enabled( $key, $on, $title );
+
+		\wp_safe_redirect( \add_query_arg( 'siwmfa_updated', 'toggle', self::page_url( array( 'siwmfa_tab' => 'forms' ) ) ) );
+		exit;
+	}
+
+	/**
+	 * Settings page URL.
+	 *
+	 * @param array<string, string> $args Extra query args.
+	 * @return string
+	 */
+	public static function page_url( array $args = array() ): string {
+		$args['page'] = self::PAGE_SLUG;
+		return \add_query_arg( $args, \admin_url( 'options-general.php' ) );
+	}
+
+	/**
+	 * Enable/disable row URL.
+	 *
+	 * @param string                                                                 $key     Registry key.
+	 * @param bool                                                                   $enable  Target state.
+	 * @param string                                                                 $title   Unused in URL; kept for callers.
+	 * @param array{search?: string, builder?: string, status?: string, paged?: int} $filters List filters.
+	 * @return string
+	 */
+	public static function toggle_url( string $key, bool $enable, string $title, array $filters = array() ): string {
+		unset( $title );
+
+		$args = array(
+			'siwmfa_tab'    => 'forms',
+			'siwmfa_toggle' => $key,
+			'siwmfa_on'     => $enable ? '1' : '0',
+		);
+		if ( ! empty( $filters['search'] ) ) {
+			$args['s'] = $filters['search'];
+		}
+		if ( ! empty( $filters['builder'] ) ) {
+			$args['siwmfa_builder'] = $filters['builder'];
+		}
+		if ( ! empty( $filters['status'] ) ) {
+			$args['siwmfa_status'] = $filters['status'];
+		}
+
+		return \wp_nonce_url( self::page_url( $args ), 'siwmfa_toggle' );
 	}
 
 	/**
@@ -134,122 +285,108 @@ final class Settings {
 			return;
 		}
 
+		// phpcs:disable WordPress.Security.NonceVerification.Recommended -- tab/editor routing.
+		$tab = 'forms';
+		if ( isset( $_GET['siwmfa_tab'] ) ) {
+			$tab = \sanitize_key( \wp_unslash( (string) $_GET['siwmfa_tab'] ) );
+		}
+		if ( 'ot' !== $tab ) {
+			$tab = 'forms';
+		}
+
+		$form_key = '';
+		if ( isset( $_GET['siwmfa_form'] ) ) {
+			$form_key = \sanitize_text_field( \wp_unslash( (string) $_GET['siwmfa_form'] ) );
+		}
+		// phpcs:enable WordPress.Security.NonceVerification.Recommended
+		?>
+		<div class="wrap siwmfa-wrap">
+			<h1><?php echo \esc_html( \get_admin_page_title() ); ?></h1>
+			<?php self::notices(); ?>
+
+			<?php if ( '' !== $form_key ) : ?>
+				<?php Form_Editor::render( $form_key ); ?>
+			<?php else : ?>
+				<nav class="nav-tab-wrapper wp-clearfix">
+					<a href="<?php echo \esc_url( self::page_url( array( 'siwmfa_tab' => 'forms' ) ) ); ?>" class="nav-tab<?php echo 'forms' === $tab ? ' nav-tab-active' : ''; ?>">
+						<?php echo \esc_html__( 'Forms', 'silvaitamar-webmcp-form-annotator' ); ?>
+					</a>
+					<a href="<?php echo \esc_url( self::page_url( array( 'siwmfa_tab' => 'ot' ) ) ); ?>" class="nav-tab<?php echo 'ot' === $tab ? ' nav-tab-active' : ''; ?>">
+						<?php echo \esc_html__( 'Origin Trial', 'silvaitamar-webmcp-form-annotator' ); ?>
+					</a>
+				</nav>
+
+				<?php if ( 'ot' === $tab ) : ?>
+					<?php self::render_origin_trial(); ?>
+				<?php else : ?>
+					<?php Form_List::render(); ?>
+				<?php endif; ?>
+			<?php endif; ?>
+		</div>
+		<?php
+	}
+
+	/**
+	 * Success notices.
+	 *
+	 * @return void
+	 */
+	private static function notices(): void {
+		if ( ! isset( $_GET['siwmfa_updated'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- notice flag.
+			return;
+		}
+
+		$which = \sanitize_key( \wp_unslash( (string) $_GET['siwmfa_updated'] ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- notice flag only.
+		$map   = array(
+			'form'   => \__( 'Annotations saved.', 'silvaitamar-webmcp-form-annotator' ),
+			'bulk'   => \__( 'Selected forms updated.', 'silvaitamar-webmcp-form-annotator' ),
+			'toggle' => \__( 'Form status updated.', 'silvaitamar-webmcp-form-annotator' ),
+		);
+
+		if ( isset( $map[ $which ] ) ) {
+			echo '<div class="notice notice-success is-dismissible"><p>' . \esc_html( $map[ $which ] ) . '</p></div>';
+		}
+	}
+
+	/**
+	 * Origin Trial tab.
+	 *
+	 * @return void
+	 */
+	private static function render_origin_trial(): void {
 		$settings = \get_option( self::OPTION_KEY, array() );
 		$token    = '';
 
 		if ( \is_array( $settings ) && isset( $settings['origin_trial_token'] ) && \is_string( $settings['origin_trial_token'] ) ) {
 			$token = $settings['origin_trial_token'];
 		}
-
-		$forms = Form_Catalog::discover();
 		?>
-		<div class="wrap">
-			<h1><?php echo \esc_html( \get_admin_page_title() ); ?></h1>
-			<?php if ( isset( $_GET['siwmfa_updated'] ) ) : // phpcs:ignore WordPress.Security.NonceVerification.Recommended ?>
-				<div class="notice notice-success is-dismissible"><p><?php echo \esc_html__( 'Form annotations saved.', 'silvaitamar-webmcp-form-annotator' ); ?></p></div>
-			<?php endif; ?>
-
-			<form method="post" action="options.php">
-				<?php \settings_fields( 'siwmfa_settings_group' ); ?>
-				<h2><?php echo \esc_html__( 'Origin Trial', 'silvaitamar-webmcp-form-annotator' ); ?></h2>
-				<table class="form-table" role="presentation">
-					<tr>
-						<th scope="row">
-							<label for="siwmfa_origin_trial_token">
-								<?php echo \esc_html__( 'Chrome Origin Trial token', 'silvaitamar-webmcp-form-annotator' ); ?>
-							</label>
-						</th>
-						<td>
-							<input
-								type="text"
-								class="large-text"
-								id="siwmfa_origin_trial_token"
-								name="<?php echo \esc_attr( self::OPTION_KEY ); ?>[origin_trial_token]"
-								value="<?php echo \esc_attr( $token ); ?>"
-								autocomplete="off"
-							/>
-							<p class="description">
-								<?php echo \esc_html__( 'Optional. Leave empty when testing with chrome://flags/#enable-webmcp-testing.', 'silvaitamar-webmcp-form-annotator' ); ?>
-							</p>
-						</td>
-					</tr>
-				</table>
-				<?php \submit_button( \__( 'Save Origin Trial token', 'silvaitamar-webmcp-form-annotator' ) ); ?>
-			</form>
-
-			<hr />
-
-			<h2><?php echo \esc_html__( 'Forms', 'silvaitamar-webmcp-form-annotator' ); ?></h2>
-			<p>
-				<?php echo \esc_html__( 'Enable a form to inject declarative WebMCP attributes. Lead and support forms never auto-submit — the visitor confirms.', 'silvaitamar-webmcp-form-annotator' ); ?>
-			</p>
-
-			<?php if ( array() === $forms ) : ?>
-				<p>
-					<?php echo \esc_html__( 'No supported forms found. Install and create a form in Contact Form 7, Fluent Forms, WPForms, Forminator, Ninja Forms, or SureForms, then return here.', 'silvaitamar-webmcp-form-annotator' ); ?>
-				</p>
-			<?php else : ?>
-				<form method="post" action="<?php echo \esc_url( \admin_url( 'options-general.php?page=siwmfa-settings' ) ); ?>">
-					<?php \wp_nonce_field( 'siwmfa_save_forms' ); ?>
-					<?php foreach ( $forms as $form ) : ?>
-						<?php
-						$key      = Registry::make_key( $form['builder'], $form['id'] );
-						$config   = Registry::get( $form['builder'], $form['id'] );
-						$toolname = '' !== $config['toolname'] ? $config['toolname'] : Registry::suggest_toolname( $form['title'] );
-						$desc     = '' !== $config['tooldescription'] ? $config['tooldescription'] : Registry::suggest_description( $form['title'] );
-						?>
-						<div class="siwmfa-form-card" style="max-width:52rem;margin:0 0 1.5rem;padding:1rem 1.25rem;border:1px solid #c3c4c7;background:#fff;">
-							<h3>
-								<label>
-									<input type="checkbox" name="<?php echo \esc_attr( 'siwmfa_forms[' . $key . '][enabled]' ); ?>" value="1" <?php \checked( $config['enabled'] ); ?> />
-									<?php echo \esc_html( $form['title'] ); ?>
-								</label>
-								<span class="description"> — <?php echo \esc_html( Form_Catalog::builder_label( $form['builder'] ) ); ?> #<?php echo \esc_html( (string) $form['id'] ); ?></span>
-							</h3>
-							<table class="form-table" role="presentation">
-								<tr>
-									<th scope="row"><label for="<?php echo \esc_attr( 'siwmfa_toolname_' . $key ); ?>"><?php echo \esc_html__( 'Tool name', 'silvaitamar-webmcp-form-annotator' ); ?></label></th>
-									<td>
-										<input class="regular-text" id="<?php echo \esc_attr( 'siwmfa_toolname_' . $key ); ?>" name="<?php echo \esc_attr( 'siwmfa_forms[' . $key . '][toolname]' ); ?>" value="<?php echo \esc_attr( $toolname ); ?>" pattern="[a-z0-9_]+" />
-									</td>
-								</tr>
-								<tr>
-									<th scope="row"><label for="<?php echo \esc_attr( 'siwmfa_desc_' . $key ); ?>"><?php echo \esc_html__( 'Tool description', 'silvaitamar-webmcp-form-annotator' ); ?></label></th>
-									<td>
-										<textarea class="large-text" rows="3" id="<?php echo \esc_attr( 'siwmfa_desc_' . $key ); ?>" name="<?php echo \esc_attr( 'siwmfa_forms[' . $key . '][tooldescription]' ); ?>"><?php echo \esc_textarea( $desc ); ?></textarea>
-									</td>
-								</tr>
-							</table>
-							<?php if ( array() !== $form['fields'] ) : ?>
-								<h4><?php echo \esc_html__( 'Field descriptions', 'silvaitamar-webmcp-form-annotator' ); ?></h4>
-								<table class="widefat striped" style="max-width:48rem;">
-									<thead>
-										<tr>
-											<th><?php echo \esc_html__( 'Field', 'silvaitamar-webmcp-form-annotator' ); ?></th>
-											<th><?php echo \esc_html__( 'toolparamdescription', 'silvaitamar-webmcp-form-annotator' ); ?></th>
-										</tr>
-									</thead>
-									<tbody>
-									<?php foreach ( $form['fields'] as $field_name => $field_label ) : ?>
-										<?php
-										$param = $config['params'][ $field_name ] ?? $field_label;
-										?>
-										<tr>
-											<td><code><?php echo \esc_html( $field_name ); ?></code></td>
-											<td>
-												<input class="large-text" name="<?php echo \esc_attr( 'siwmfa_forms[' . $key . '][params][' . $field_name . ']' ); ?>" value="<?php echo \esc_attr( $param ); ?>" />
-											</td>
-										</tr>
-									<?php endforeach; ?>
-									</tbody>
-								</table>
-							<?php endif; ?>
-						</div>
-					<?php endforeach; ?>
-					<?php \submit_button( \__( 'Save form annotations', 'silvaitamar-webmcp-form-annotator' ), 'primary', 'siwmfa_save_forms' ); ?>
-				</form>
-			<?php endif; ?>
-		</div>
+		<form method="post" action="options.php">
+			<?php \settings_fields( 'siwmfa_settings_group' ); ?>
+			<table class="form-table" role="presentation">
+				<tr>
+					<th scope="row">
+						<label for="siwmfa_origin_trial_token">
+							<?php echo \esc_html__( 'Chrome Origin Trial token', 'silvaitamar-webmcp-form-annotator' ); ?>
+						</label>
+					</th>
+					<td>
+						<input
+							type="text"
+							class="large-text"
+							id="siwmfa_origin_trial_token"
+							name="<?php echo \esc_attr( self::OPTION_KEY ); ?>[origin_trial_token]"
+							value="<?php echo \esc_attr( $token ); ?>"
+							autocomplete="off"
+						/>
+						<p class="description">
+							<?php echo \esc_html__( 'Optional. Leave empty when testing with chrome://flags/#enable-webmcp-testing.', 'silvaitamar-webmcp-form-annotator' ); ?>
+						</p>
+					</td>
+				</tr>
+			</table>
+			<?php \submit_button( \__( 'Save Origin Trial token', 'silvaitamar-webmcp-form-annotator' ) ); ?>
+		</form>
 		<?php
 	}
 }

@@ -1,0 +1,32 @@
+.siwmfa-wrap .subsubsub {
+	margin-bottom: 0.5rem;
+}
+
+.siwmfa-wrap .search-box {
+	margin: 0.5rem 0 1rem;
+}
+
+.siwmfa-status--on {
+	color: #00a32a;
+	font-weight: 600;
+}
+
+.siwmfa-status--off {
+	color: #646970;
+}
+
+.siwmfa-form-editor {
+	max-width: 52rem;
+}
+
+.siwmfa-fields {
+	margin: 0.5rem 0 1rem;
+}
+
+.siwmfa-wrap .column-fields {
+	width: 5rem;
+}
+
+.siwmfa-wrap .wp-list-table .column-title {
+	width: auto;
+}
