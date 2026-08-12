@@ -7,6 +7,7 @@
 
 namespace Siwmfa\Adapters;
 
+use Siwmfa\Annotator;
 use Siwmfa\Registry;
 
 defined( 'ABSPATH' ) || exit;
@@ -77,7 +78,7 @@ final class Fluent_Forms {
 		}
 
 		try {
-			$rows = \wpFluent()->table( 'fluentform_forms' )->select( array( 'id', 'title', 'form_fields' ) )->orderBy( 'id', 'DESC' )->get();
+			$rows = \wpFluent()->table( 'fluentform_forms' )->select( array( 'id', 'title', 'form_fields' ) )->orderBy( 'id', 'DESC' )->limit( 100 )->get();
 		} catch ( \Throwable $exception ) {
 			unset( $exception );
 			return array();
@@ -119,10 +120,7 @@ final class Fluent_Forms {
 			return $attrs;
 		}
 
-		$attrs['toolname']        = $config['toolname'];
-		$attrs['tooldescription'] = $config['tooldescription'];
-
-		return $attrs;
+		return \array_merge( $attrs, Annotator::form_attributes( $config ) );
 	}
 
 	/**

@@ -73,7 +73,11 @@ final class Forminator {
 			$out[] = array(
 				'builder' => self::BUILDER,
 				'id'      => $id,
-				'title'   => '' !== $title ? $title : ( 'Form ' . $id ),
+				'title'   => '' !== $title ? $title : \sprintf(
+					/* translators: %d: form ID */
+					\__( 'Form %d', 'silvaitamar-webmcp-form-annotator' ),
+					$id
+				),
 				'fields'  => self::list_fields( $id ),
 			);
 		}

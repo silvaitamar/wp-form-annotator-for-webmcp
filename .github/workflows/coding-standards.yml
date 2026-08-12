@@ -25,5 +25,8 @@ jobs:
         run: |
           find . -path ./vendor -prune -o -name '*.php' -print0 | xargs -0 -n1 php -l
 
+      - name: Core unit tests (no WordPress)
+        run: composer test
+
       - name: PHPCS (WPCS + PrefixAllGlobals)
         run: composer lint

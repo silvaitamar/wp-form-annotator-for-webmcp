@@ -1,6 +1,6 @@
 <?php
 /**
- * Bootstrap do plugin.
+ * Plugin bootstrap.
  *
  * @package Siwmfa
  */
@@ -18,7 +18,7 @@ use Siwmfa\Admin\Settings;
 defined( 'ABSPATH' ) || exit;
 
 /**
- * Classe principal do plugin.
+ * Main plugin class.
  */
 final class Plugin {
 

@@ -54,11 +54,15 @@ final class Contact_Form_7 {
 
 		$posts = \get_posts(
 			array(
-				'post_type'      => 'wpcf7_contact_form',
-				'post_status'    => 'any',
-				'posts_per_page' => 100,
-				'orderby'        => 'title',
-				'order'          => 'ASC',
+				'post_type'              => 'wpcf7_contact_form',
+				'post_status'            => 'any',
+				'posts_per_page'         => 100,
+				'orderby'                => 'title',
+				'order'                  => 'ASC',
+				'no_found_rows'          => true,
+				'ignore_sticky_posts'    => true,
+				'update_post_meta_cache' => false,
+				'update_post_term_cache' => false,
 			)
 		);
 

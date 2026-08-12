@@ -33,6 +33,7 @@
 	"scripts": {
 		"lint": "phpcs",
 		"lint:fix": "phpcbf",
+		"test": "php tests/test-core.php",
 		"i18n": "wp i18n make-pot . languages/silvaitamar-webmcp-form-annotator.pot --domain=silvaitamar-webmcp-form-annotator --slug=silvaitamar-webmcp-form-annotator --exclude=vendor,node_modules,scripts,tests,.wordpress-org,docs"
 	}
 }

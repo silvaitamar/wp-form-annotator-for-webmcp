@@ -48,6 +48,7 @@ Quando houver ZIP em [Releases](https://github.com/silvaitamar/wp-webmcp-form-an
 ```bash
 composer install
 composer lint   # PHPCS + WPCS, prefixo siwmfa
+composer test   # Annotator/Registry sem WordPress
 bash scripts/build-release-zip.sh
 bash scripts/validate-release-zip.sh
 ```

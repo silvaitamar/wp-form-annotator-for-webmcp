@@ -31,13 +31,7 @@ final class Origin_Trial {
 	 * @return void
 	 */
 	public static function print_meta(): void {
-		$settings = \get_option( Settings::OPTION_KEY, array() );
-		$token    = '';
-
-		if ( \is_array( $settings ) && isset( $settings['origin_trial_token'] ) && \is_string( $settings['origin_trial_token'] ) ) {
-			$token = \trim( $settings['origin_trial_token'] );
-		}
-
+		$token = Settings::origin_trial_token();
 		if ( '' === $token ) {
 			return;
 		}

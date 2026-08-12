@@ -80,11 +80,26 @@ final class Settings {
 			array(
 				'type'              => 'array',
 				'sanitize_callback' => array( self::class, 'sanitize_settings' ),
+				'show_in_rest'      => false,
 				'default'           => array(
 					'origin_trial_token' => '',
 				),
 			)
 		);
+	}
+
+	/**
+	 * Stored Origin Trial token, or empty.
+	 *
+	 * @return string
+	 */
+	public static function origin_trial_token(): string {
+		$settings = \get_option( self::OPTION_KEY, array() );
+		if ( ! \is_array( $settings ) || ! isset( $settings['origin_trial_token'] ) || ! \is_string( $settings['origin_trial_token'] ) ) {
+			return '';
+		}
+
+		return \trim( $settings['origin_trial_token'] );
 	}
 
 	/**
@@ -120,7 +135,7 @@ final class Settings {
 		}
 
 		if ( ! \current_user_can( 'manage_options' ) ) {
-			return;
+			\wp_die( \esc_html__( 'Sorry, you are not allowed to manage these settings.', 'silvaitamar-webmcp-form-annotator' ) );
 		}
 
 		\check_admin_referer( 'siwmfa_save_form' );
@@ -162,7 +177,7 @@ final class Settings {
 		}
 
 		if ( ! \current_user_can( 'manage_options' ) ) {
-			return;
+			\wp_die( \esc_html__( 'Sorry, you are not allowed to manage these settings.', 'silvaitamar-webmcp-form-annotator' ) );
 		}
 
 		\check_admin_referer( 'siwmfa_bulk_forms' );
@@ -211,7 +226,7 @@ final class Settings {
 		}
 
 		if ( ! \current_user_can( 'manage_options' ) ) {
-			return;
+			\wp_die( \esc_html__( 'Sorry, you are not allowed to manage these settings.', 'silvaitamar-webmcp-form-annotator' ) );
 		}
 
 		\check_admin_referer( 'siwmfa_toggle' );
@@ -354,12 +369,7 @@ final class Settings {
 	 * @return void
 	 */
 	private static function render_origin_trial(): void {
-		$settings = \get_option( self::OPTION_KEY, array() );
-		$token    = '';
-
-		if ( \is_array( $settings ) && isset( $settings['origin_trial_token'] ) && \is_string( $settings['origin_trial_token'] ) ) {
-			$token = $settings['origin_trial_token'];
-		}
+		$token = self::origin_trial_token();
 		?>
 		<form method="post" action="options.php">
 			<?php \settings_fields( 'siwmfa_settings_group' ); ?>

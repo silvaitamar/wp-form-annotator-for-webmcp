@@ -80,7 +80,11 @@ final class Ninja_Forms {
 			$out[] = array(
 				'builder' => self::BUILDER,
 				'id'      => $id,
-				'title'   => '' !== $title ? $title : ( 'Form ' . $id ),
+				'title'   => '' !== $title ? $title : \sprintf(
+					/* translators: %d: form ID */
+					\__( 'Form %d', 'silvaitamar-webmcp-form-annotator' ),
+					$id
+				),
 				'fields'  => self::list_fields( $id ),
 			);
 		}
@@ -136,7 +140,12 @@ final class Ninja_Forms {
 			true
 		);
 
-		\wp_localize_script( 'siwmfa-ninja-annotate', 'siwmfaNinja', $configs );
+		$json = \wp_json_encode( $configs );
+		if ( ! \is_string( $json ) ) {
+			return;
+		}
+
+		\wp_add_inline_script( 'siwmfa-ninja-annotate', 'window.siwmfaNinja = ' . $json . ';', 'before' );
 	}
 
 	/**
