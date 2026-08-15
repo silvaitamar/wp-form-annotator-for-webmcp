@@ -3,6 +3,7 @@
 .phpunit.result.cache
 *.zip
 /docs/QA.md
+/.wordpress-org/README.md
 .DS_Store
 Thumbs.db
 
