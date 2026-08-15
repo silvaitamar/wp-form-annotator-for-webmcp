@@ -15,6 +15,39 @@ defined( 'ABSPATH' ) || exit;
 final class Annotator {
 
 	/**
+	 * Allows WebMCP attributes through wp_kses so later sanitization does not strip them.
+	 *
+	 * @return void
+	 */
+	public static function register(): void {
+		\add_filter( 'wp_kses_allowed_html', array( self::class, 'allow_webmcp_attrs' ), 10, 2 );
+	}
+
+	/**
+	 * Adds toolname / tooldescription / toolparamdescription to allowed HTML.
+	 *
+	 * @param array<string, mixed> $tags    Allowed tags.
+	 * @param string|array<mixed>  $context Kses context.
+	 * @return array<string, mixed>
+	 */
+	public static function allow_webmcp_attrs( array $tags, $context ): array {
+		unset( $context );
+
+		foreach ( array( 'form', 'input', 'select', 'textarea' ) as $tag ) {
+			if ( ! isset( $tags[ $tag ] ) || ! \is_array( $tags[ $tag ] ) ) {
+				continue;
+			}
+			if ( 'form' === $tag ) {
+				$tags[ $tag ]['toolname']        = true;
+				$tags[ $tag ]['tooldescription'] = true;
+			}
+			$tags[ $tag ]['toolparamdescription'] = true;
+		}
+
+		return $tags;
+	}
+
+	/**
 	 * Builds toolname and tooldescription attributes for a form tag.
 	 *
 	 * @param array{toolname: string, tooldescription: string, params?: array<string, string>} $config Form config.
@@ -54,6 +87,37 @@ final class Annotator {
 		}
 
 		return (string) \preg_replace( '/<form\b/i', '<form' . $inject, $html, 1 );
+	}
+
+	/**
+	 * Injects toolname / tooldescription on the <form> whose id is `$form_html_id`.
+	 *
+	 * @param string                                                                           $html         Markup that may contain several forms.
+	 * @param string                                                                           $form_html_id Value of the form id attribute.
+	 * @param array{toolname: string, tooldescription: string, params?: array<string, string>} $config       Form config.
+	 * @return string
+	 */
+	public static function inject_form_tag_by_id( string $html, string $form_html_id, array $config ): string {
+		$attrs = self::form_attributes( $config );
+		if ( array() === $attrs || '' === $form_html_id ) {
+			return $html;
+		}
+
+		$inject = '';
+		foreach ( $attrs as $name => $value ) {
+			$inject .= \sprintf( ' %s="%s"', $name, \esc_attr( $value ) );
+		}
+
+		$quoted = \preg_quote( $form_html_id, '/' );
+
+		$replaced = \preg_replace(
+			'/<form\b(?![^>]*\btoolname=)([^>]*\bid=(["\'])' . $quoted . '\2)/is',
+			'<form' . $inject . '$1',
+			$html,
+			1
+		);
+
+		return \is_string( $replaced ) ? $replaced : $html;
 	}
 
 	/**

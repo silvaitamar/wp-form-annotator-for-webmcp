@@ -30,6 +30,7 @@ final class Plugin {
 	public static function init(): void {
 		Settings::register();
 		Origin_Trial::register();
+		Annotator::register();
 		\add_action( 'plugins_loaded', array( self::class, 'register_adapters' ), 20 );
 	}
 

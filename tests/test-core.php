@@ -90,6 +90,13 @@ siwmfa_assert( 1 === substr_count( strtolower( $with_form ), 'toolname=' ), 'inj
 $again = \Siwmfa\Annotator::inject_form_tag( $with_form, $config );
 siwmfa_assert( $again === $with_form, 'inject_form_tag is idempotent when toolname exists' );
 
+$srfm = "<form method=\"post\" enctype=\"multipart/form-data\" id=\"srfm-form-15\" class=\"srfm-form\"\nform-id=\"15\">\n<input type=\"text\" name=\"nome\">\n</form>";
+$other = '<form id="wpcf7-f6" toolname="submit_other"><input name="x"></form>' . $srfm;
+$srfm_out = \Siwmfa\Annotator::inject_form_tag_by_id( $other, 'srfm-form-15', $config );
+siwmfa_assert( false !== strpos( $srfm_out, 'id="srfm-form-15"' ) && false !== strpos( $srfm_out, 'toolname="submit_contact"' ), 'inject_form_tag_by_id targets SureForms id' );
+siwmfa_assert( 1 === substr_count( $srfm_out, 'toolname="submit_contact"' ), 'inject_form_tag_by_id does not retarget other forms' );
+siwmfa_assert( false !== strpos( $srfm_out, 'toolname="submit_other"' ), 'inject_form_tag_by_id leaves other toolname' );
+
 $with_params = \Siwmfa\Annotator::inject_param_attrs( $with_form, $config['params'] );
 siwmfa_assert( false !== strpos( $with_params, 'name="email" toolparamdescription="Visitor email"' ), 'inject_param_attrs annotates text input' );
 siwmfa_assert( false !== strpos( $with_params, 'toolparamdescription="Message body"' ), 'inject_param_attrs annotates textarea' );

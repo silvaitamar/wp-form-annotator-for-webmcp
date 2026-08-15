@@ -30,7 +30,9 @@ final class SureForms {
 		}
 
 		\add_filter( 'do_shortcode_tag', array( self::class, 'annotate_shortcode' ), 20, 3 );
+		\add_filter( 'render_block', array( self::class, 'annotate_embed_block' ), 20, 2 );
 		\add_filter( 'render_block', array( self::class, 'annotate_field_block' ), 20, 2 );
+		\add_filter( 'the_content', array( self::class, 'annotate_content' ), 20 );
 	}
 
 	/**
@@ -105,6 +107,62 @@ final class SureForms {
 	}
 
 	/**
+	 * Annotates the wrapping <form> when the form is embedded as a Gutenberg block.
+	 *
+	 * SureForms prints the <form> in get_form_markup(); field blocks already went
+	 * through render_block (params). The shortcode filter never sees this path.
+	 *
+	 * @param string               $block_content Block HTML.
+	 * @param array<string, mixed> $block         Parsed block.
+	 * @return string
+	 */
+	public static function annotate_embed_block( string $block_content, array $block ): string {
+		$name = isset( $block['blockName'] ) ? (string) $block['blockName'] : '';
+		if ( 'srfm/form' !== $name || '' === $block_content ) {
+			return $block_content;
+		}
+
+		$attrs = isset( $block['attrs'] ) && \is_array( $block['attrs'] ) ? $block['attrs'] : array();
+		$id    = isset( $attrs['id'] ) ? (int) $attrs['id'] : 0;
+		if ( $id <= 0 ) {
+			$id = self::form_id_from_markup( $block_content );
+		}
+
+		if ( $id <= 0 || ! Registry::is_enabled( self::BUILDER, $id ) ) {
+			return $block_content;
+		}
+
+		return self::annotate_form_html( $block_content, Registry::get( self::BUILDER, $id ) );
+	}
+
+	/**
+	 * Last-resort annotation for embeds that skip both the shortcode and srfm/form block
+	 * (classic the_content wrappers). Idempotent when toolname is already present.
+	 *
+	 * @param string $content Post content HTML.
+	 * @return string
+	 */
+	public static function annotate_content( string $content ): string {
+		if ( '' === $content || false === \stripos( $content, 'srfm-form-' ) ) {
+			return $content;
+		}
+
+		if ( ! \preg_match_all( '/\bid=["\']srfm-form-(\d+)["\']/', $content, $matches ) ) {
+			return $content;
+		}
+
+		$ids = \array_unique( \array_map( 'intval', $matches[1] ) );
+		foreach ( $ids as $id ) {
+			if ( $id <= 0 || ! Registry::is_enabled( self::BUILDER, $id ) ) {
+				continue;
+			}
+			$content = self::annotate_form_html( $content, Registry::get( self::BUILDER, $id ) );
+		}
+
+		return $content;
+	}
+
+	/**
 	 * Adds toolparamdescription to SureForms field blocks.
 	 *
 	 * @param string               $block_content Block HTML.
@@ -153,7 +211,12 @@ final class SureForms {
 	 * @return string
 	 */
 	public static function annotate_form_html( string $html, array $config ): string {
-		$html = Annotator::inject_form_tag( $html, $config );
+		$id = self::form_id_from_markup( $html );
+		if ( $id > 0 ) {
+			$html = Annotator::inject_form_tag_by_id( $html, 'srfm-form-' . $id, $config );
+		} else {
+			$html = Annotator::inject_form_tag( $html, $config );
+		}
 
 		$html = (string) \preg_replace(
 			'/(<input\b[^>]*\btype=(["\'])hidden\2[^>]*)\s+toolparamdescription=(["\'])[^"\']*\3/i',
@@ -170,6 +233,23 @@ final class SureForms {
 		);
 
 		return Annotator::inject_param_attrs( $html, $config['params'] );
+	}
+
+	/**
+	 * Reads the SureForms form ID from markup.
+	 *
+	 * @param string $html Markup.
+	 * @return int
+	 */
+	private static function form_id_from_markup( string $html ): int {
+		if ( \preg_match( '/\bid=["\']srfm-form-(\d+)["\']/', $html, $m ) ) {
+			return (int) $m[1];
+		}
+		if ( \preg_match( '/\bform-id=["\'](\d+)["\']/', $html, $m ) ) {
+			return (int) $m[1];
+		}
+
+		return 0;
 	}
 
 	/**
