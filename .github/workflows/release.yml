@@ -32,5 +32,5 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           files: |
-            silvaitamar-webmcp-form-annotator.zip
+            silvaitamar-form-annotator-for-webmcp.zip
           generate_release_notes: true

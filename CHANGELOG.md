@@ -15,9 +15,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Optional Chrome Origin Trial token in `wp_head`.
 - Execute Tool fixture matrix under `docs/fixtures/`.
 
+### Changed
+
+- Display name, slug, and text domain are now SilvaItamar Form Annotator for WebMCP (`silvaitamar-form-annotator-for-webmcp`), after WordPress.org trademark feedback. Internal prefix `siwmfa` is unchanged. GitHub repository: `silvaitamar/wp-form-annotator-for-webmcp`.
+
 ### Notes
 
 - Lead and support forms never use `toolautosubmit`.
 - This plugin does not ship a contact form (lab-only in `wp-webmcp-forms`).
 
-[1.0.0]: https://github.com/silvaitamar/wp-webmcp-form-annotator/releases/tag/v1.0.0
+[1.0.0]: https://github.com/silvaitamar/wp-form-annotator-for-webmcp/releases/tag/v1.0.0

@@ -1,4 +1,4 @@
-=== SilvaItamar WebMCP Form Annotator ===
+=== SilvaItamar Form Annotator for WebMCP ===
 Contributors: itamarsilvacc
 Tags: forms, contact-form, ai, chrome, webmcp
 Requires at least: 6.4
@@ -12,14 +12,14 @@ Annotate WordPress forms with declarative WebMCP attributes so browser AI agents
 
 == Description ==
 
-**SilvaItamar WebMCP Form Annotator** is a WordPress plugin that adds [declarative WebMCP](https://developer.chrome.com/docs/ai/webmcp) attributes (`toolname`, `tooldescription`, `toolparamdescription`) to existing contact and lead forms. In-browser AI agents (Chrome with WebMCP) can then discover those forms on the page and fill them without guessing the DOM.
+**SilvaItamar Form Annotator for WebMCP** is a WordPress plugin that adds [declarative WebMCP](https://developer.chrome.com/docs/ai/webmcp) attributes (`toolname`, `tooldescription`, `toolparamdescription`) to existing contact and lead forms. In-browser AI agents (Chrome with WebMCP) can then discover those forms on the page and fill them without guessing the DOM.
 
 It is for site owners who already use a form plugin and want agents to fill lead, contact, or support requests. It does not replace your form plugin, and it does not submit the form for the visitor.
 
 = How it works =
 
 1. Create a form in a supported builder (Contact Form 7, Fluent Forms, WPForms, Forminator, Ninja Forms, or SureForms).
-2. Open **Settings → WebMCP Forms**, enable the form (one by one or in bulk), then **Annotate** to set the tool name, description, and field text.
+2. Open **Settings → Form Annotator**, enable the form (one by one or in bulk), then **Annotate** to set the tool name, description, and field text.
 3. On the front end the plugin injects WebMCP attributes into the real `<form>` markup. Lead and support forms never use `toolautosubmit` — a human confirms send.
 
 = What this plugin does =
@@ -49,10 +49,10 @@ Contact Form 7, Fluent Forms, WPForms, Forminator, Ninja Forms, and SureForms. Y
 
 == Installation ==
 
-1. Upload the `silvaitamar-webmcp-form-annotator` folder to `/wp-content/plugins/`.
+1. Upload the `silvaitamar-form-annotator-for-webmcp` folder to `/wp-content/plugins/`.
 2. Activate the plugin through the **Plugins** screen.
 3. Install one of the supported form plugins and create a form, if you do not already have one.
-4. Open **Settings → WebMCP Forms**, find the form (search or filter by builder), enable it, then **Annotate** to set the tool name, description, and field text.
+4. Open **Settings → Form Annotator**, find the form (search or filter by builder), enable it, then **Annotate** to set the tool name, description, and field text.
 
 == Frequently Asked Questions ==
 
@@ -66,7 +66,7 @@ No. WebMCP runs in the browser, on the page. MCP servers for IDEs (Cursor, Claud
 
 = Can a browser AI agent fill my WordPress contact form? =
 
-Yes, after you enable that form in **Settings → WebMCP Forms** and annotate it. The agent sees `toolname`, `tooldescription`, and `toolparamdescription` on the real form. The visitor still confirms submit.
+Yes, after you enable that form in **Settings → Form Annotator** and annotate it. The agent sees `toolname`, `tooldescription`, and `toolparamdescription` on the real form. The visitor still confirms submit.
 
 = Does this plugin submit the form automatically? =
 
@@ -86,7 +86,7 @@ No. It does not write `llms.txt`, sitemaps, or schema for search engines. It ann
 
 = How do I test annotations in the browser? =
 
-Use Chrome with `chrome://flags/#enable-webmcp-testing` (or an Origin Trial token under **Settings → WebMCP Forms → Origin Trial**) and a WebMCP inspector extension. Enable a form, view it on the front end, and confirm `toolname`, `tooldescription`, and `toolparamdescription` on the markup.
+Use Chrome with `chrome://flags/#enable-webmcp-testing` (or an Origin Trial token under **Settings → Form Annotator → Origin Trial**) and a WebMCP inspector extension. Enable a form, view it on the front end, and confirm `toolname`, `tooldescription`, and `toolparamdescription` on the markup.
 
 = How do I translate this plugin? =
 

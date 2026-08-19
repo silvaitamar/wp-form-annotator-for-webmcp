@@ -3,7 +3,7 @@
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
-SLUG="silvaitamar-webmcp-form-annotator"
+SLUG="silvaitamar-form-annotator-for-webmcp"
 ZIP="${1:-${ROOT}/${SLUG}.zip}"
 FAIL=0
 
@@ -34,7 +34,7 @@ if ! printf '%s\n' "${LIST}" | grep -qx "${SLUG}/readme.txt"; then
   echo "FAIL: missing readme.txt"
   FAIL=1
 fi
-if ! printf '%s\n' "${LIST}" | grep -qx "${SLUG}/silvaitamar-webmcp-form-annotator.php"; then
+if ! printf '%s\n' "${LIST}" | grep -qx "${SLUG}/silvaitamar-form-annotator-for-webmcp.php"; then
   echo "FAIL: missing main plugin file"
   FAIL=1
 fi
@@ -46,7 +46,7 @@ fi
 STAGE="$(mktemp -d)"
 trap 'rm -rf "${STAGE}"' EXIT
 unzip -q "${ZIP}" -d "${STAGE}"
-MAIN="${STAGE}/${SLUG}/silvaitamar-webmcp-form-annotator.php"
+MAIN="${STAGE}/${SLUG}/silvaitamar-form-annotator-for-webmcp.php"
 README="${STAGE}/${SLUG}/readme.txt"
 ver="$(grep -E '^ \* Version:' "${MAIN}" | awk '{print $3}')"
 stable="$(grep -E '^Stable tag:' "${README}" | awk '{print $3}')"

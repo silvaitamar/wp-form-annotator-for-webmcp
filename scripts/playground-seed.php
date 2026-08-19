@@ -210,7 +210,7 @@ update_option( 'siwmfa_forms', $saved, false );
 
 $notice  = '<!-- wp:group {"style":{"spacing":{"padding":{"top":"var:preset|spacing|30","bottom":"var:preset|spacing|30","left":"var:preset|spacing|40","right":"var:preset|spacing|40"}},"border":{"radius":"4px"}},"backgroundColor":"accent-5","layout":{"type":"constrained"}} -->';
 $notice .= '<div class="wp-block-group has-accent-5-background-color has-background" style="border-radius:4px;padding-top:var(--wp--preset--spacing--30);padding-right:var(--wp--preset--spacing--40);padding-bottom:var(--wp--preset--spacing--30);padding-left:var(--wp--preset--spacing--40)">';
-$notice .= '<!-- wp:paragraph --><p><strong>Demo:</strong> this Fluent Forms contact form is already annotated with WebMCP (<code>toolname</code>, <code>tooldescription</code>, <code>toolparamdescription</code>). It never auto-submits. You are logged in — open <strong>Settings → WebMCP Forms</strong> to edit the annotation, then return here to view the markup.</p><!-- /wp:paragraph -->';
+$notice .= '<!-- wp:paragraph --><p><strong>Demo:</strong> this Fluent Forms contact form is already annotated with WebMCP (<code>toolname</code>, <code>tooldescription</code>, <code>toolparamdescription</code>). It never auto-submits. You are logged in — open <strong>Settings → Form Annotator</strong> to edit the annotation, then return here to view the markup.</p><!-- /wp:paragraph -->';
 $notice .= '</div><!-- /wp:group -->';
 
 $content  = $notice;
@@ -242,7 +242,7 @@ if ( $page instanceof WP_Post ) {
 }
 
 if ( $siwmfa_playground ) {
-	update_option( 'blogname', 'WebMCP Form Annotator (demo)', false );
+	update_option( 'blogname', 'Form Annotator for WebMCP (demo)', false );
 	update_option( 'blogdescription', 'Fluent Forms contact form with declarative WebMCP attributes — fictional demo', false );
 	update_option( 'show_on_front', 'page', false );
 	update_option( 'page_on_front', $page_id, false );

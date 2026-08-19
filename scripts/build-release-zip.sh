@@ -3,7 +3,7 @@
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
-SLUG="silvaitamar-webmcp-form-annotator"
+SLUG="silvaitamar-form-annotator-for-webmcp"
 OUT="${ROOT}/${SLUG}.zip"
 STAGE="$(mktemp -d)"
 trap 'rm -rf "${STAGE}"' EXIT
@@ -45,7 +45,7 @@ if command -v git >/dev/null 2>&1 && git rev-parse --is-inside-work-tree >/dev/n
   done
 else
   # Fallback without git: copy PHP sources + license + readme.
-  cp -a silvaitamar-webmcp-form-annotator.php uninstall.php readme.txt LICENSE "${STAGE}/${SLUG}/"
+  cp -a silvaitamar-form-annotator-for-webmcp.php uninstall.php readme.txt LICENSE "${STAGE}/${SLUG}/"
   cp -a src "${STAGE}/${SLUG}/"
   mkdir -p "${STAGE}/${SLUG}/languages"
 fi

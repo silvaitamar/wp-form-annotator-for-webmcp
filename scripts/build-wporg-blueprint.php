@@ -33,8 +33,8 @@ $seed     = $wrapped;
 $blueprint = array(
 	'$schema'           => 'https://playground.wordpress.net/blueprint-schema.json',
 	'meta'              => array(
-		'title'       => 'SilvaItamar WebMCP Form Annotator',
-		'description' => 'Logged-in admin, Fluent Forms contact page already annotated with WebMCP. Open Settings → WebMCP Forms to edit.',
+		'title'       => 'SilvaItamar Form Annotator for WebMCP',
+		'description' => 'Logged-in admin, Fluent Forms contact page already annotated with WebMCP. Open Settings → Form Annotator to edit.',
 		'author'      => 'silvaitamar',
 		'categories'  => array( 'webmcp', 'forms', 'ai' ),
 	),

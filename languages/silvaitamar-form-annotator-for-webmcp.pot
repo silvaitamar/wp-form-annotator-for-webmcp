@@ -2,8 +2,8 @@
 # This file is distributed under the GPL-2.0-or-later.
 msgid ""
 msgstr ""
-"Project-Id-Version: SilvaItamar WebMCP Form Annotator 1.0.0\n"
-"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/silvaitamar-webmcp-form-annotator\n"
+"Project-Id-Version: SilvaItamar Form Annotator for WebMCP 1.0.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/silvaitamar-form-annotator-for-webmcp\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -12,30 +12,30 @@ msgstr ""
 "POT-Creation-Date: 2026-08-12T02:45:25+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
-"X-Domain: silvaitamar-webmcp-form-annotator\n"
+"X-Domain: silvaitamar-form-annotator-for-webmcp\n"
 
 #. Plugin Name of the plugin
-#: silvaitamar-webmcp-form-annotator.php
-msgid "SilvaItamar WebMCP Form Annotator"
+#: silvaitamar-form-annotator-for-webmcp.php
+msgid "SilvaItamar Form Annotator for WebMCP"
 msgstr ""
 
 #. Plugin URI of the plugin
-#: silvaitamar-webmcp-form-annotator.php
-msgid "https://github.com/silvaitamar/wp-webmcp-form-annotator"
+#: silvaitamar-form-annotator-for-webmcp.php
+msgid "https://github.com/silvaitamar/wp-form-annotator-for-webmcp"
 msgstr ""
 
 #. Description of the plugin
-#: silvaitamar-webmcp-form-annotator.php
+#: silvaitamar-form-annotator-for-webmcp.php
 msgid "Annotate WordPress forms with declarative WebMCP attributes so browser AI agents can fill lead and support forms reliably."
 msgstr ""
 
 #. Author of the plugin
-#: silvaitamar-webmcp-form-annotator.php
+#: silvaitamar-form-annotator-for-webmcp.php
 msgid "Itamar Silva"
 msgstr ""
 
 #. Author URI of the plugin
-#: silvaitamar-webmcp-form-annotator.php
+#: silvaitamar-form-annotator-for-webmcp.php
 msgid "https://github.com/silvaitamar"
 msgstr ""
 
@@ -219,11 +219,11 @@ msgstr[0] ""
 msgstr[1] ""
 
 #: src/Admin/Settings.php:44
-msgid "WebMCP Form Annotator"
+msgid "Form Annotator for WebMCP"
 msgstr ""
 
 #: src/Admin/Settings.php:45
-msgid "WebMCP Forms"
+msgid "Form Annotator"
 msgstr ""
 
 #: src/Admin/Settings.php:138

@@ -82,7 +82,7 @@ final class Ninja_Forms {
 				'id'      => $id,
 				'title'   => '' !== $title ? $title : \sprintf(
 					/* translators: %d: form ID */
-					\__( 'Form %d', 'silvaitamar-webmcp-form-annotator' ),
+					\__( 'Form %d', 'silvaitamar-form-annotator-for-webmcp' ),
 					$id
 				),
 				'fields'  => self::list_fields( $id ),

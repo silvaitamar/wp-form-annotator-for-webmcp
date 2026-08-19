@@ -13,7 +13,7 @@ use Siwmfa\Registry;
 defined( 'ABSPATH' ) || exit;
 
 /**
- * Settings → WebMCP Forms.
+ * Settings → Form Annotator.
  */
 final class Settings {
 
@@ -41,8 +41,8 @@ final class Settings {
 	 */
 	public static function add_menu(): void {
 		\add_options_page(
-			\__( 'WebMCP Form Annotator', 'silvaitamar-webmcp-form-annotator' ),
-			\__( 'WebMCP Forms', 'silvaitamar-webmcp-form-annotator' ),
+			\__( 'Form Annotator for WebMCP', 'silvaitamar-form-annotator-for-webmcp' ),
+			\__( 'Form Annotator', 'silvaitamar-form-annotator-for-webmcp' ),
 			'manage_options',
 			self::PAGE_SLUG,
 			array( self::class, 'render_page' )
@@ -135,7 +135,7 @@ final class Settings {
 		}
 
 		if ( ! \current_user_can( 'manage_options' ) ) {
-			\wp_die( \esc_html__( 'Sorry, you are not allowed to manage these settings.', 'silvaitamar-webmcp-form-annotator' ) );
+			\wp_die( \esc_html__( 'Sorry, you are not allowed to manage these settings.', 'silvaitamar-form-annotator-for-webmcp' ) );
 		}
 
 		\check_admin_referer( 'siwmfa_save_form' );
@@ -177,7 +177,7 @@ final class Settings {
 		}
 
 		if ( ! \current_user_can( 'manage_options' ) ) {
-			\wp_die( \esc_html__( 'Sorry, you are not allowed to manage these settings.', 'silvaitamar-webmcp-form-annotator' ) );
+			\wp_die( \esc_html__( 'Sorry, you are not allowed to manage these settings.', 'silvaitamar-form-annotator-for-webmcp' ) );
 		}
 
 		\check_admin_referer( 'siwmfa_bulk_forms' );
@@ -226,7 +226,7 @@ final class Settings {
 		}
 
 		if ( ! \current_user_can( 'manage_options' ) ) {
-			\wp_die( \esc_html__( 'Sorry, you are not allowed to manage these settings.', 'silvaitamar-webmcp-form-annotator' ) );
+			\wp_die( \esc_html__( 'Sorry, you are not allowed to manage these settings.', 'silvaitamar-form-annotator-for-webmcp' ) );
 		}
 
 		\check_admin_referer( 'siwmfa_toggle' );
@@ -324,10 +324,10 @@ final class Settings {
 			<?php else : ?>
 				<nav class="nav-tab-wrapper wp-clearfix">
 					<a href="<?php echo \esc_url( self::page_url( array( 'siwmfa_tab' => 'forms' ) ) ); ?>" class="nav-tab<?php echo 'forms' === $tab ? ' nav-tab-active' : ''; ?>">
-						<?php echo \esc_html__( 'Forms', 'silvaitamar-webmcp-form-annotator' ); ?>
+						<?php echo \esc_html__( 'Forms', 'silvaitamar-form-annotator-for-webmcp' ); ?>
 					</a>
 					<a href="<?php echo \esc_url( self::page_url( array( 'siwmfa_tab' => 'ot' ) ) ); ?>" class="nav-tab<?php echo 'ot' === $tab ? ' nav-tab-active' : ''; ?>">
-						<?php echo \esc_html__( 'Origin Trial', 'silvaitamar-webmcp-form-annotator' ); ?>
+						<?php echo \esc_html__( 'Origin Trial', 'silvaitamar-form-annotator-for-webmcp' ); ?>
 					</a>
 				</nav>
 
@@ -353,9 +353,9 @@ final class Settings {
 
 		$which = \sanitize_key( \wp_unslash( (string) $_GET['siwmfa_updated'] ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- notice flag only.
 		$map   = array(
-			'form'   => \__( 'Annotations saved.', 'silvaitamar-webmcp-form-annotator' ),
-			'bulk'   => \__( 'Selected forms updated.', 'silvaitamar-webmcp-form-annotator' ),
-			'toggle' => \__( 'Form status updated.', 'silvaitamar-webmcp-form-annotator' ),
+			'form'   => \__( 'Annotations saved.', 'silvaitamar-form-annotator-for-webmcp' ),
+			'bulk'   => \__( 'Selected forms updated.', 'silvaitamar-form-annotator-for-webmcp' ),
+			'toggle' => \__( 'Form status updated.', 'silvaitamar-form-annotator-for-webmcp' ),
 		);
 
 		if ( isset( $map[ $which ] ) ) {
@@ -377,7 +377,7 @@ final class Settings {
 				<tr>
 					<th scope="row">
 						<label for="siwmfa_origin_trial_token">
-							<?php echo \esc_html__( 'Chrome Origin Trial token', 'silvaitamar-webmcp-form-annotator' ); ?>
+							<?php echo \esc_html__( 'Chrome Origin Trial token', 'silvaitamar-form-annotator-for-webmcp' ); ?>
 						</label>
 					</th>
 					<td>
@@ -390,12 +390,12 @@ final class Settings {
 							autocomplete="off"
 						/>
 						<p class="description">
-							<?php echo \esc_html__( 'Optional. Leave empty when testing with chrome://flags/#enable-webmcp-testing.', 'silvaitamar-webmcp-form-annotator' ); ?>
+							<?php echo \esc_html__( 'Optional. Leave empty when testing with chrome://flags/#enable-webmcp-testing.', 'silvaitamar-form-annotator-for-webmcp' ); ?>
 						</p>
 					</td>
 				</tr>
 			</table>
-			<?php \submit_button( \__( 'Save Origin Trial token', 'silvaitamar-webmcp-form-annotator' ) ); ?>
+			<?php \submit_button( \__( 'Save Origin Trial token', 'silvaitamar-form-annotator-for-webmcp' ) ); ?>
 		</form>
 		<?php
 	}

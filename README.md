@@ -1,4 +1,4 @@
-# SilvaItamar WebMCP Form Annotator
+# SilvaItamar Form Annotator for WebMCP
 
 [![License: GPL v2 or later](https://img.shields.io/badge/License-GPL%20v2%20or%20later-blue.svg)](https://www.gnu.org/licenses/gpl-2.0.html)
 
@@ -12,7 +12,7 @@ A ficha do diretório WordPress.org é o [`readme.txt`](readme.txt) (inglês). E
 
 ## O que faz
 
-Injeta anotações WebMCP no markup real do `<form>` (opt-in por formulário). Em **Configurações → WebMCP Forms** a lista filtra por builder/status, permite ativar em massa, e **Annotate** abre um form por vez (nome da tool, descrição e `toolparamdescription` dos campos). Token opcional de Chrome Origin Trial.
+Injeta anotações WebMCP no markup real do `<form>` (opt-in por formulário). Em **Configurações → Form Annotator** a lista filtra por builder/status, permite ativar em massa, e **Annotate** abre um form por vez (nome da tool, descrição e `toolparamdescription` dos campos). Token opcional de Chrome Origin Trial.
 
 Não substitui o plugin de formulário: CF7, Fluent, WPForms e os demais continuam criando e processando o form.
 
@@ -47,15 +47,15 @@ Para testar tools hoje: Chrome com flag WebMCP (`chrome://flags/#enable-webmcp-t
 ### A partir do repositório
 
 ```bash
-git clone https://github.com/silvaitamar/wp-webmcp-form-annotator.git
-cd wp-webmcp-form-annotator
+git clone https://github.com/silvaitamar/wp-form-annotator-for-webmcp.git
+cd wp-form-annotator-for-webmcp
 ```
 
-Copie a pasta para `wp-content/plugins/silvaitamar-webmcp-form-annotator/` (ou use o clone diretamente nesse caminho) e ative em **Plugins**. Instale um dos builders suportados, crie um form e abra **Configurações → WebMCP Forms**.
+Copie a pasta para `wp-content/plugins/silvaitamar-form-annotator-for-webmcp/` (ou use o clone diretamente nesse caminho) e ative em **Plugins**. Instale um dos builders suportados, crie um form e abra **Configurações → Form Annotator**.
 
 ### A partir de uma release
 
-Quando houver ZIP em [Releases](https://github.com/silvaitamar/wp-webmcp-form-annotator/releases), extraia em `wp-content/plugins/` e ative o plugin.
+Quando houver ZIP em [Releases](https://github.com/silvaitamar/wp-form-annotator-for-webmcp/releases), extraia em `wp-content/plugins/` e ative o plugin.
 
 ## Desenvolvimento
 
@@ -67,7 +67,7 @@ bash scripts/build-release-zip.sh
 bash scripts/validate-release-zip.sh
 ```
 
-Traduções: o domínio é o slug (`silvaitamar-webmcp-form-annotator`). O `.pot` fica em `languages/`. Depois da listagem no WordPress.org, o GlotPress gera language packs — não versionar `.mo` de locales que já têm pack.
+Traduções: o domínio é o slug (`silvaitamar-form-annotator-for-webmcp`). O `.pot` fica em `languages/`. Depois da listagem no WordPress.org, o GlotPress gera language packs — não versionar `.mo` de locales que já têm pack.
 
 O que vai ao WordPress.org (`readme.txt`, UI do plugin, blueprint/assets) e as notas versionadas em `docs/` ficam em **inglês**. Checklist de QA manual: `docs/QA.md` (pt-BR, arquivo local, fora do git).
 
@@ -78,7 +78,7 @@ src/           Código PHP (PSR-4)
 assets/        CSS do admin e JS do adapter Ninja
 languages/     POT (GlotPress após a listagem)
 tests/         Testes de núcleo sem WordPress
-silvaitamar-webmcp-form-annotator.php   Bootstrap
+silvaitamar-form-annotator-for-webmcp.php   Bootstrap
 readme.txt     Metadados para o WordPress.org (inglês)
 ```
 

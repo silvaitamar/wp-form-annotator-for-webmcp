@@ -1,7 +1,7 @@
 <?php
 /**
- * Plugin Name:       SilvaItamar WebMCP Form Annotator
- * Plugin URI:        https://github.com/silvaitamar/wp-webmcp-form-annotator
+ * Plugin Name:       SilvaItamar Form Annotator for WebMCP
+ * Plugin URI:        https://github.com/silvaitamar/wp-form-annotator-for-webmcp
  * Description:       Annotate WordPress forms with declarative WebMCP attributes so browser AI agents can fill lead and support forms reliably.
  * Version:           1.0.0
  * Requires at least: 6.4
@@ -10,7 +10,7 @@
  * Author URI:        https://github.com/silvaitamar
  * License:           GPL-2.0-or-later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
- * Text Domain:       silvaitamar-webmcp-form-annotator
+ * Text Domain:       silvaitamar-form-annotator-for-webmcp
  * Domain Path:       /languages
  *
  * @package Siwmfa

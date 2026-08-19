@@ -1,5 +1,5 @@
 {
-	"name": "silvaitamar/webmcp-form-annotator",
+	"name": "silvaitamar/form-annotator-for-webmcp",
 	"description": "Annotate WordPress forms with declarative WebMCP attributes for browser AI agents.",
 	"type": "wordpress-plugin",
 	"license": "GPL-2.0-or-later",
@@ -34,6 +34,6 @@
 		"lint": "phpcs",
 		"lint:fix": "phpcbf",
 		"test": "php tests/test-core.php",
-		"i18n": "wp i18n make-pot . languages/silvaitamar-webmcp-form-annotator.pot --domain=silvaitamar-webmcp-form-annotator --slug=silvaitamar-webmcp-form-annotator --exclude=vendor,node_modules,scripts,tests,.wordpress-org,docs"
+		"i18n": "wp i18n make-pot . languages/silvaitamar-form-annotator-for-webmcp.pot --domain=silvaitamar-form-annotator-for-webmcp --slug=silvaitamar-form-annotator-for-webmcp --exclude=vendor,node_modules,scripts,tests,.wordpress-org,docs"
 	}
 }

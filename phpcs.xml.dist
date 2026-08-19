@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
-<ruleset name="SilvaItamar WebMCP Form Annotator">
-	<description>Coding standards for the SilvaItamar WebMCP Form Annotator plugin.</description>
+<ruleset name="SilvaItamar Form Annotator for WebMCP">
+	<description>Coding standards for the SilvaItamar Form Annotator for WebMCP plugin.</description>
 
-	<file>silvaitamar-webmcp-form-annotator.php</file>
+	<file>silvaitamar-form-annotator-for-webmcp.php</file>
 	<file>uninstall.php</file>
 	<file>src</file>
 
@@ -20,7 +20,7 @@
 	<rule ref="WordPress.WP.I18n">
 		<properties>
 			<property name="text_domain" type="array">
-				<element value="silvaitamar-webmcp-form-annotator"/>
+				<element value="silvaitamar-form-annotator-for-webmcp"/>
 			</property>
 		</properties>
 	</rule>

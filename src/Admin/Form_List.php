@@ -39,12 +39,12 @@ final class Form_List {
 		$base_url = Settings::page_url( array( 'siwmfa_tab' => 'forms' ) );
 		?>
 		<p>
-			<?php echo \esc_html__( 'Enable a form, then open it to set the tool name, description, and field annotations. Lead and support forms never auto-submit — the visitor confirms.', 'silvaitamar-webmcp-form-annotator' ); ?>
+			<?php echo \esc_html__( 'Enable a form, then open it to set the tool name, description, and field annotations. Lead and support forms never auto-submit — the visitor confirms.', 'silvaitamar-form-annotator-for-webmcp' ); ?>
 		</p>
 
 		<?php if ( array() === $all ) : ?>
 			<p>
-				<?php echo \esc_html__( 'No supported forms found. Install and create a form in Contact Form 7, Fluent Forms, WPForms, Forminator, Ninja Forms, or SureForms, then return here.', 'silvaitamar-webmcp-form-annotator' ); ?>
+				<?php echo \esc_html__( 'No supported forms found. Install and create a form in Contact Form 7, Fluent Forms, WPForms, Forminator, Ninja Forms, or SureForms, then return here.', 'silvaitamar-form-annotator-for-webmcp' ); ?>
 			</p>
 			<?php
 			return;
@@ -52,9 +52,9 @@ final class Form_List {
 		?>
 
 		<ul class="subsubsub">
-			<?php self::view_link( $base_url, '', \__( 'All', 'silvaitamar-webmcp-form-annotator' ), $counts['all'], '' === $filters['status'] ); ?>
-			<?php self::view_link( $base_url, 'enabled', \__( 'Enabled', 'silvaitamar-webmcp-form-annotator' ), $counts['enabled'], 'enabled' === $filters['status'] ); ?>
-			<?php self::view_link( $base_url, 'disabled', \__( 'Disabled', 'silvaitamar-webmcp-form-annotator' ), $counts['disabled'], 'disabled' === $filters['status'] ); ?>
+			<?php self::view_link( $base_url, '', \__( 'All', 'silvaitamar-form-annotator-for-webmcp' ), $counts['all'], '' === $filters['status'] ); ?>
+			<?php self::view_link( $base_url, 'enabled', \__( 'Enabled', 'silvaitamar-form-annotator-for-webmcp' ), $counts['enabled'], 'enabled' === $filters['status'] ); ?>
+			<?php self::view_link( $base_url, 'disabled', \__( 'Disabled', 'silvaitamar-form-annotator-for-webmcp' ), $counts['disabled'], 'disabled' === $filters['status'] ); ?>
 		</ul>
 
 		<form method="get" action="<?php echo \esc_url( \admin_url( 'options-general.php' ) ); ?>">
@@ -65,21 +65,21 @@ final class Form_List {
 			<?php endif; ?>
 
 			<p class="search-box">
-				<label class="screen-reader-text" for="siwmfa-form-search"><?php echo \esc_html__( 'Search forms', 'silvaitamar-webmcp-form-annotator' ); ?></label>
+				<label class="screen-reader-text" for="siwmfa-form-search"><?php echo \esc_html__( 'Search forms', 'silvaitamar-form-annotator-for-webmcp' ); ?></label>
 				<input type="search" id="siwmfa-form-search" name="s" value="<?php echo \esc_attr( $filters['search'] ); ?>" />
-				<?php \submit_button( \__( 'Search forms', 'silvaitamar-webmcp-form-annotator' ), '', '', false, array( 'id' => 'search-submit' ) ); ?>
+				<?php \submit_button( \__( 'Search forms', 'silvaitamar-form-annotator-for-webmcp' ), '', '', false, array( 'id' => 'search-submit' ) ); ?>
 			</p>
 
 			<div class="tablenav top">
 				<div class="alignleft actions">
-					<label for="siwmfa_builder" class="screen-reader-text"><?php echo \esc_html__( 'Filter by builder', 'silvaitamar-webmcp-form-annotator' ); ?></label>
+					<label for="siwmfa_builder" class="screen-reader-text"><?php echo \esc_html__( 'Filter by builder', 'silvaitamar-form-annotator-for-webmcp' ); ?></label>
 					<select name="siwmfa_builder" id="siwmfa_builder">
-						<option value=""><?php echo \esc_html__( 'All builders', 'silvaitamar-webmcp-form-annotator' ); ?></option>
+						<option value=""><?php echo \esc_html__( 'All builders', 'silvaitamar-form-annotator-for-webmcp' ); ?></option>
 						<?php foreach ( $builders as $slug => $label ) : ?>
 							<option value="<?php echo \esc_attr( $slug ); ?>" <?php \selected( $filters['builder'], $slug ); ?>><?php echo \esc_html( $label ); ?></option>
 						<?php endforeach; ?>
 					</select>
-					<?php \submit_button( \__( 'Filter', 'silvaitamar-webmcp-form-annotator' ), '', 'filter_action', false ); ?>
+					<?php \submit_button( \__( 'Filter', 'silvaitamar-form-annotator-for-webmcp' ), '', 'filter_action', false ); ?>
 				</div>
 				<?php self::pagination( $total, $paged, $pages, $filters ); ?>
 				<br class="clear" />
@@ -90,13 +90,13 @@ final class Form_List {
 			<?php \wp_nonce_field( 'siwmfa_bulk_forms' ); ?>
 			<div class="tablenav top">
 				<div class="alignleft actions bulkactions">
-					<label for="bulk-action-selector-top" class="screen-reader-text"><?php echo \esc_html__( 'Select bulk action', 'silvaitamar-webmcp-form-annotator' ); ?></label>
+					<label for="bulk-action-selector-top" class="screen-reader-text"><?php echo \esc_html__( 'Select bulk action', 'silvaitamar-form-annotator-for-webmcp' ); ?></label>
 					<select name="siwmfa_bulk" id="bulk-action-selector-top">
-						<option value="-1"><?php echo \esc_html__( 'Bulk actions', 'silvaitamar-webmcp-form-annotator' ); ?></option>
-						<option value="enable"><?php echo \esc_html__( 'Enable', 'silvaitamar-webmcp-form-annotator' ); ?></option>
-						<option value="disable"><?php echo \esc_html__( 'Disable', 'silvaitamar-webmcp-form-annotator' ); ?></option>
+						<option value="-1"><?php echo \esc_html__( 'Bulk actions', 'silvaitamar-form-annotator-for-webmcp' ); ?></option>
+						<option value="enable"><?php echo \esc_html__( 'Enable', 'silvaitamar-form-annotator-for-webmcp' ); ?></option>
+						<option value="disable"><?php echo \esc_html__( 'Disable', 'silvaitamar-form-annotator-for-webmcp' ); ?></option>
 					</select>
-					<?php \submit_button( \__( 'Apply', 'silvaitamar-webmcp-form-annotator' ), 'action', 'siwmfa_bulk_apply', false ); ?>
+					<?php \submit_button( \__( 'Apply', 'silvaitamar-form-annotator-for-webmcp' ), 'action', 'siwmfa_bulk_apply', false ); ?>
 				</div>
 			</div>
 
@@ -104,20 +104,20 @@ final class Form_List {
 				<thead>
 					<tr>
 						<td class="manage-column column-cb check-column">
-							<label class="screen-reader-text" for="cb-select-all-1"><?php echo \esc_html__( 'Select all', 'silvaitamar-webmcp-form-annotator' ); ?></label>
+							<label class="screen-reader-text" for="cb-select-all-1"><?php echo \esc_html__( 'Select all', 'silvaitamar-form-annotator-for-webmcp' ); ?></label>
 							<input id="cb-select-all-1" type="checkbox" />
 						</td>
-						<th scope="col"><?php echo \esc_html__( 'Form', 'silvaitamar-webmcp-form-annotator' ); ?></th>
-						<th scope="col"><?php echo \esc_html__( 'Builder', 'silvaitamar-webmcp-form-annotator' ); ?></th>
-						<th scope="col"><?php echo \esc_html__( 'Status', 'silvaitamar-webmcp-form-annotator' ); ?></th>
-						<th scope="col"><?php echo \esc_html__( 'Tool name', 'silvaitamar-webmcp-form-annotator' ); ?></th>
-						<th scope="col" class="column-fields"><?php echo \esc_html__( 'Fields', 'silvaitamar-webmcp-form-annotator' ); ?></th>
+						<th scope="col"><?php echo \esc_html__( 'Form', 'silvaitamar-form-annotator-for-webmcp' ); ?></th>
+						<th scope="col"><?php echo \esc_html__( 'Builder', 'silvaitamar-form-annotator-for-webmcp' ); ?></th>
+						<th scope="col"><?php echo \esc_html__( 'Status', 'silvaitamar-form-annotator-for-webmcp' ); ?></th>
+						<th scope="col"><?php echo \esc_html__( 'Tool name', 'silvaitamar-form-annotator-for-webmcp' ); ?></th>
+						<th scope="col" class="column-fields"><?php echo \esc_html__( 'Fields', 'silvaitamar-form-annotator-for-webmcp' ); ?></th>
 					</tr>
 				</thead>
 				<tbody>
 					<?php if ( array() === $page_rows ) : ?>
 						<tr>
-							<td colspan="6"><?php echo \esc_html__( 'No forms match this search.', 'silvaitamar-webmcp-form-annotator' ); ?></td>
+							<td colspan="6"><?php echo \esc_html__( 'No forms match this search.', 'silvaitamar-form-annotator-for-webmcp' ); ?></td>
 						</tr>
 					<?php else : ?>
 						<?php foreach ( $page_rows as $form ) : ?>
@@ -286,7 +286,7 @@ final class Form_List {
 					echo \esc_html(
 						\sprintf(
 							/* translators: %s: form title */
-							\__( 'Select %s', 'silvaitamar-webmcp-form-annotator' ),
+							\__( 'Select %s', 'silvaitamar-form-annotator-for-webmcp' ),
 							$form['title']
 						)
 					);
@@ -297,10 +297,10 @@ final class Form_List {
 			<td class="column-title has-row-actions column-primary">
 				<strong><a class="row-title" href="<?php echo \esc_url( $edit_url ); ?>"><?php echo \esc_html( $form['title'] ); ?></a></strong>
 				<div class="row-actions">
-					<span class="edit"><a href="<?php echo \esc_url( $edit_url ); ?>"><?php echo \esc_html__( 'Annotate', 'silvaitamar-webmcp-form-annotator' ); ?></a> | </span>
+					<span class="edit"><a href="<?php echo \esc_url( $edit_url ); ?>"><?php echo \esc_html__( 'Annotate', 'silvaitamar-form-annotator-for-webmcp' ); ?></a> | </span>
 					<span class="inline">
 						<a href="<?php echo \esc_url( $toggle ); ?>">
-							<?php echo $config['enabled'] ? \esc_html__( 'Disable', 'silvaitamar-webmcp-form-annotator' ) : \esc_html__( 'Enable', 'silvaitamar-webmcp-form-annotator' ); ?>
+							<?php echo $config['enabled'] ? \esc_html__( 'Disable', 'silvaitamar-form-annotator-for-webmcp' ) : \esc_html__( 'Enable', 'silvaitamar-form-annotator-for-webmcp' ); ?>
 						</a>
 					</span>
 				</div>
@@ -308,9 +308,9 @@ final class Form_List {
 			<td><?php echo \esc_html( Form_Catalog::builder_label( $form['builder'] ) ); ?> <span class="description">#<?php echo \esc_html( (string) $form['id'] ); ?></span></td>
 			<td>
 				<?php if ( $config['enabled'] ) : ?>
-					<span class="siwmfa-status siwmfa-status--on"><?php echo \esc_html__( 'Enabled', 'silvaitamar-webmcp-form-annotator' ); ?></span>
+					<span class="siwmfa-status siwmfa-status--on"><?php echo \esc_html__( 'Enabled', 'silvaitamar-form-annotator-for-webmcp' ); ?></span>
 				<?php else : ?>
-					<span class="siwmfa-status siwmfa-status--off"><?php echo \esc_html__( 'Off', 'silvaitamar-webmcp-form-annotator' ); ?></span>
+					<span class="siwmfa-status siwmfa-status--off"><?php echo \esc_html__( 'Off', 'silvaitamar-form-annotator-for-webmcp' ); ?></span>
 				<?php endif; ?>
 			</td>
 			<td><?php echo '' !== $config['toolname'] ? '<code>' . \esc_html( $config['toolname'] ) . '</code>' : '<span class="description">—</span>'; ?></td>
@@ -364,7 +364,7 @@ final class Form_List {
 			\esc_html(
 				\sprintf(
 					/* translators: %s: number of forms */
-					\_n( '%s form', '%s forms', $total, 'silvaitamar-webmcp-form-annotator' ),
+					\_n( '%s form', '%s forms', $total, 'silvaitamar-form-annotator-for-webmcp' ),
 					\number_format_i18n( $total )
 				)
 			),

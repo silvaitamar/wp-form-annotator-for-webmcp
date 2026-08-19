@@ -231,12 +231,12 @@ final class Registry {
 	public static function suggest_description( string $title ): string {
 		$title = \wp_strip_all_tags( $title );
 		if ( '' === $title ) {
-			$title = \__( 'contact form', 'silvaitamar-webmcp-form-annotator' );
+			$title = \__( 'contact form', 'silvaitamar-form-annotator-for-webmcp' );
 		}
 
 		return \sprintf(
 			/* translators: %s: form title */
-			\__( 'Fills the "%s" form on this page. Use for lead, contact, or support requests. Do not submit the form — only fill the fields.', 'silvaitamar-webmcp-form-annotator' ),
+			\__( 'Fills the "%s" form on this page. Use for lead, contact, or support requests. Do not submit the form — only fill the fields.', 'silvaitamar-form-annotator-for-webmcp' ),
 			$title
 		);
 	}
