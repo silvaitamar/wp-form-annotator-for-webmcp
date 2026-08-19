@@ -13,4 +13,6 @@ Generic notes for WordPress.org / GitHub. No staging URLs or client names.
 
 This plugin does **not** ship a contact form. Native HTML/shortcode forms belong in the lab (`wp-webmcp-forms`), not the wp.org product.
 
+WordPress: 6.4 through **7.1**. PHP 8.0+.
+
 Lead and support tools never auto-submit. Search/`toolautosubmit` is out of v1 (planned v1.1).

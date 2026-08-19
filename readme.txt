@@ -2,7 +2,7 @@
 Contributors: itamarsilvacc
 Tags: forms, contact-form, ai, chrome, webmcp
 Requires at least: 6.4
-Tested up to: 7.0
+Tested up to: 7.1
 Requires PHP: 8.0
 Stable tag: 1.0.0
 License: GPLv2 or later
@@ -103,6 +103,7 @@ This plugin stores annotation settings and an optional Origin Trial token in the
 * Settings list with search, filters, pagination, bulk enable/disable, and a single-form editor.
 * Optional Chrome Origin Trial token.
 * Lead and support forms never auto-submit.
+* Tested up to WordPress 7.1.
 
 == Upgrade Notice ==
 

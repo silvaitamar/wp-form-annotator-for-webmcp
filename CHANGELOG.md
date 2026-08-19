@@ -21,6 +21,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Notes
 
+- Tested with WordPress 7.1.
 - Lead and support forms never use `toolautosubmit`.
 - This plugin does not ship a contact form (lab-only in `wp-webmcp-forms`).
 
