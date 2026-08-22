@@ -1,9 +1,9 @@
 <?php
 /**
- * Plugin Name:       SilvaItamar Form Annotator for WebMCP
+ * Plugin Name:       Form Annotator for WebMCP
  * Plugin URI:        https://github.com/silvaitamar/wp-form-annotator-for-webmcp
  * Description:       Annotate WordPress forms with declarative WebMCP attributes so browser AI agents can fill lead and support forms reliably.
- * Version:           1.0.0
+ * Version:           1.0.1
  * Requires at least: 6.4
  * Requires PHP:      8.0
  * Author:            Itamar Silva
@@ -18,7 +18,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'SIWMFA_VERSION', '1.0.0' );
+define( 'SIWMFA_VERSION', '1.0.1' );
 define( 'SIWMFA_PLUGIN_FILE', __FILE__ );
 define( 'SIWMFA_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 define( 'SIWMFA_PLUGIN_URL', plugin_dir_url( __FILE__ ) );

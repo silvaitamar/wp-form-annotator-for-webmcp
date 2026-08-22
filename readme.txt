@@ -1,10 +1,10 @@
-=== SilvaItamar Form Annotator for WebMCP ===
+=== Form Annotator for WebMCP ===
 Contributors: itamarsilvacc
 Tags: forms, contact-form, ai, chrome, webmcp
 Requires at least: 6.4
 Tested up to: 7.1
 Requires PHP: 8.0
-Stable tag: 1.0.0
+Stable tag: 1.0.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -12,7 +12,7 @@ Annotate WordPress forms with declarative WebMCP attributes so browser AI agents
 
 == Description ==
 
-**SilvaItamar Form Annotator for WebMCP** is a WordPress plugin that adds [declarative WebMCP](https://developer.chrome.com/docs/ai/webmcp) attributes (`toolname`, `tooldescription`, `toolparamdescription`) to existing contact and lead forms. In-browser AI agents (Chrome with WebMCP) can then discover those forms on the page and fill them without guessing the DOM.
+**Form Annotator for WebMCP** is a WordPress plugin that adds [declarative WebMCP](https://developer.chrome.com/docs/ai/webmcp) attributes (`toolname`, `tooldescription`, `toolparamdescription`) to existing contact and lead forms. In-browser AI agents (Chrome with WebMCP) can then discover those forms on the page and fill them without guessing the DOM.
 
 It is for site owners who already use a form plugin and want agents to fill lead, contact, or support requests. It does not replace your form plugin, and it does not submit the form for the visitor.
 
@@ -98,6 +98,9 @@ This plugin stores annotation settings and an optional Origin Trial token in the
 
 == Changelog ==
 
+= 1.0.1 =
+* Display name only: Form Annotator for WebMCP (slug and text domain unchanged).
+
 = 1.0.0 =
 * First public release: opt-in WebMCP annotation for Contact Form 7, Fluent Forms, WPForms, Forminator, Ninja Forms, and SureForms.
 * Settings list with search, filters, pagination, bulk enable/disable, and a single-form editor.
@@ -106,6 +109,9 @@ This plugin stores annotation settings and an optional Origin Trial token in the
 * Tested up to WordPress 7.1.
 
 == Upgrade Notice ==
+
+= 1.0.1 =
+Display name update only. No settings or database changes.
 
 = 1.0.0 =
 First public release. Annotate existing form-plugin markup with declarative WebMCP attributes.

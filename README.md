@@ -1,4 +1,4 @@
-# SilvaItamar Form Annotator for WebMCP
+# Form Annotator for WebMCP
 
 [![License: GPL v2 or later](https://img.shields.io/badge/License-GPL%20v2%20or%20later-blue.svg)](https://www.gnu.org/licenses/gpl-2.0.html)
 
@@ -6,7 +6,7 @@ Plugin WordPress que anota formulários já existentes com atributos [WebMCP](ht
 
 **Autor:** [Itamar Silva](https://github.com/silvaitamar) · [Perfil WordPress](https://profiles.wordpress.org/itamarsilvacc/)
 
-**Status:** `1.0.0` — anotação opt-in para Contact Form 7, Fluent Forms, WPForms, Forminator, Ninja Forms e SureForms. WordPress 6.4–7.1, PHP 8.0+.
+**Status:** `1.0.1` — anotação opt-in para Contact Form 7, Fluent Forms, WPForms, Forminator, Ninja Forms e SureForms. WordPress 6.4–7.1, PHP 8.0+.
 
 A ficha do diretório WordPress.org é o [`readme.txt`](readme.txt) (inglês). Este README é o guia do repositório GitHub (português).
 

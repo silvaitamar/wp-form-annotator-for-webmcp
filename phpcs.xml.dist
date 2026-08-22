@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
-<ruleset name="SilvaItamar Form Annotator for WebMCP">
-	<description>Coding standards for the SilvaItamar Form Annotator for WebMCP plugin.</description>
+<ruleset name="Form Annotator for WebMCP">
+	<description>Coding standards for the Form Annotator for WebMCP plugin.</description>
 
 	<file>silvaitamar-form-annotator-for-webmcp.php</file>
 	<file>uninstall.php</file>

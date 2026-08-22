@@ -1,7 +1,7 @@
 {
     "$schema": "https://playground.wordpress.net/blueprint-schema.json",
     "meta": {
-        "title": "SilvaItamar Form Annotator for WebMCP",
+        "title": "Form Annotator for WebMCP",
         "description": "Logged-in admin, Fluent Forms contact page already annotated with WebMCP. Open Settings → Form Annotator to edit.",
         "author": "silvaitamar",
         "categories": [

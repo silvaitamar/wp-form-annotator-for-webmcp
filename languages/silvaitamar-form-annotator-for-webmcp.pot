@@ -2,7 +2,7 @@
 # This file is distributed under the GPL-2.0-or-later.
 msgid ""
 msgstr ""
-"Project-Id-Version: SilvaItamar Form Annotator for WebMCP 1.0.0\n"
+"Project-Id-Version: Form Annotator for WebMCP 1.0.1\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/silvaitamar-form-annotator-for-webmcp\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,7 +16,8 @@ msgstr ""
 
 #. Plugin Name of the plugin
 #: silvaitamar-form-annotator-for-webmcp.php
-msgid "SilvaItamar Form Annotator for WebMCP"
+#: src/Admin/Settings.php:44
+msgid "Form Annotator for WebMCP"
 msgstr ""
 
 #. Plugin URI of the plugin
@@ -217,10 +218,6 @@ msgid "%s form"
 msgid_plural "%s forms"
 msgstr[0] ""
 msgstr[1] ""
-
-#: src/Admin/Settings.php:44
-msgid "Form Annotator for WebMCP"
-msgstr ""
 
 #: src/Admin/Settings.php:45
 msgid "Form Annotator"
