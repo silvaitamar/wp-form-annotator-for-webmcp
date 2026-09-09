@@ -30,8 +30,8 @@ final class Cache_Purge {
 		 */
 		\do_action( 'siwmfa_before_purge_caches' );
 
-		// LiteSpeed Cache (LSCWP) — documented public action.
-		\do_action( 'litespeed_purge_all' );
+		// LiteSpeed Cache (LSCWP) — documented public action (third-party hook name).
+		\do_action( 'litespeed_purge_all' ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- LSCWP API.
 
 		if ( \function_exists( 'rocket_clean_domain' ) ) {
 			\rocket_clean_domain();
