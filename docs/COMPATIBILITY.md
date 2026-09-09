@@ -33,12 +33,17 @@ Object cache alone rarely explains missing attrs when options already store the 
 
 ## PageSpeed Insights vs local WebMCP checks
 
-Declarative attrs (`toolname`, `tooldescription`, `toolparamdescription`) can be present in the HTML while **PageSpeed Insights** still shows no WebMCP tools.
+Declarative attrs (`toolname`, `tooldescription`, `toolparamdescription`) can be present in the HTML while **PageSpeed Insights** does not list WebMCP tools under Agentic Browsing.
 
-- PSI **Performance** does not list WebMCP tools.
-- The Lighthouse **Agentic Browsing** audits `webmcp-registered-tools` / `webmcp-form-coverage` need a browser with WebMCP enabled. Google’s PSI lab typically leaves those audits **Not Applicable** because the lab browser does not run the Origin Trial / `chrome://flags/#enable-webmcp-testing`.
-- To verify tools: Chrome with the testing flag (or a valid Origin Trial token from **Settings → Form Annotator → Origin Trial**) + [Model Context Tool Inspector](https://chromewebstore.google.com/detail/gbpdfapgefenggkahomfgkhfehlcenpd), or Lighthouse locally with Agentic Browsing and WebMCP on.
+Official Lighthouse docs ([Agentic browsing scoring](https://developer.chrome.com/docs/lighthouse/agentic-browsing/scoring)):
+
+- The Agentic Browsing category and WebMCP support are **experimental**.
+- Testing the category requires **Chrome 150+**.
+- **WebMCP audits require registering for the WebMCP origin trial** (or equivalent local enablement such as `chrome://flags/#enable-webmcp-testing`).
+- Lighthouse discovers tools by calling the CDP **`WebMCP` domain** — if that domain is unavailable in the runner, the WebMCP audits have nothing to observe and appear as **Not Applicable** (common in the PSI lab).
+
+What still runs in PSI without WebMCP: the non-WebMCP agentic checks (accessibility subset, CLS, `llms.txt`, etc.) — hence a fractional score like **3/3** with **3 N/A** for the WebMCP trio (`webmcp-registered-tools`, `webmcp-form-coverage`, `webmcp-schema-validity`).
+
+**Canonical verification:** Chrome local (flag or OT token from **Settings → Form Annotator → Origin Trial**) → DevTools **Lighthouse → Agentic Browsing**, and/or the [WebMCP panel](https://developer.chrome.com/docs/devtools/application/webmcp) / Tool Inspector. See also [Registered WebMCP tools](https://developer.chrome.com/docs/lighthouse/agentic-browsing/registered-webmcp-tools).
 
 Confirm markup with View Source / `toolname=` on the real `<form>` before chasing PSI.
-
-See also: [Registered WebMCP tools (Lighthouse)](https://developer.chrome.com/docs/lighthouse/agentic-browsing/registered-webmcp-tools).
