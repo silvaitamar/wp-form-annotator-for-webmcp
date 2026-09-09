@@ -87,6 +87,7 @@ final class Registry {
 		}
 
 		\update_option( self::OPTION_KEY, $clean, false );
+		Cache_Purge::after_annotation_change();
 	}
 
 	/**
@@ -105,6 +106,7 @@ final class Registry {
 		$all         = self::get_all();
 		$all[ $key ] = self::normalize( $row );
 		\update_option( self::OPTION_KEY, $all, false );
+		Cache_Purge::after_annotation_change();
 
 		return true;
 	}

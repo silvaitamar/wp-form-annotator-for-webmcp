@@ -2,7 +2,7 @@
 # This file is distributed under the GPL-2.0-or-later.
 msgid ""
 msgstr ""
-"Project-Id-Version: Form Annotator for WebMCP 1.0.1\n"
+"Project-Id-Version: Form Annotator for WebMCP 1.0.2\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/silvaitamar-form-annotator-for-webmcp\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -238,15 +238,15 @@ msgid "Origin Trial"
 msgstr ""
 
 #: src/Admin/Settings.php:356
-msgid "Annotations saved."
+msgid "Annotations saved. Page caches were asked to purge so visitors see the new attributes."
 msgstr ""
 
 #: src/Admin/Settings.php:357
-msgid "Selected forms updated."
+msgid "Selected forms updated. Page caches were asked to purge so visitors see the new attributes."
 msgstr ""
 
 #: src/Admin/Settings.php:358
-msgid "Form status updated."
+msgid "Form status updated. Page caches were asked to purge so visitors see the new attributes."
 msgstr ""
 
 #: src/Admin/Settings.php:380

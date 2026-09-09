@@ -16,3 +16,29 @@ This plugin does **not** ship a contact form. Native HTML/shortcode forms belong
 WordPress: 6.4 through **7.1**. PHP 8.0+.
 
 Lead and support tools never auto-submit. Search/`toolautosubmit` is out of v1 (planned v1.1).
+
+## Page cache (LiteSpeed and similar)
+
+Annotations are injected when the form builder **renders** HTML in PHP (filters such as `fluentform/html_attributes`). They are **not** patched into HTML that a full-page cache already stored.
+
+| Symptom | Likely cause |
+|---------|----------------|
+| Admin shows the form enabled, front end has no `toolname` | Guest page cache from before enable/annotate |
+| “Purge” in the cache UI seems to do nothing | Incomplete purge (CDN/host layer, language variants, logged-in vs guest) |
+| Disabling the cache plugin “fixes” it; re-enabling keeps attrs | First uncached PHP hit rebuilt the page; new cache snapshot includes attrs |
+
+**After enable / annotate / bulk toggle**, this plugin fires `litespeed_purge_all` and `siwmfa_purge_caches` (plus a few other common page-cache helpers when present). If a host CDN sits in front of LSCWP, purge that layer too or exclude the contact page from cache while validating.
+
+Object cache alone rarely explains missing attrs when options already store the enabled config — the usual culprit is **HTML page cache**.
+
+## PageSpeed Insights vs local WebMCP checks
+
+Declarative attrs (`toolname`, `tooldescription`, `toolparamdescription`) can be present in the HTML while **PageSpeed Insights** still shows no WebMCP tools.
+
+- PSI **Performance** does not list WebMCP tools.
+- The Lighthouse **Agentic Browsing** audits `webmcp-registered-tools` / `webmcp-form-coverage` need a browser with WebMCP enabled. Google’s PSI lab typically leaves those audits **Not Applicable** because the lab browser does not run the Origin Trial / `chrome://flags/#enable-webmcp-testing`.
+- To verify tools: Chrome with the testing flag (or a valid Origin Trial token from **Settings → Form Annotator → Origin Trial**) + [Model Context Tool Inspector](https://chromewebstore.google.com/detail/gbpdfapgefenggkahomfgkhfehlcenpd), or Lighthouse locally with Agentic Browsing and WebMCP on.
+
+Confirm markup with View Source / `toolname=` on the real `<form>` before chasing PSI.
+
+See also: [Registered WebMCP tools (Lighthouse)](https://developer.chrome.com/docs/lighthouse/agentic-browsing/registered-webmcp-tools).

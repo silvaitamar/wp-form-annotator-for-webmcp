@@ -353,9 +353,9 @@ final class Settings {
 
 		$which = \sanitize_key( \wp_unslash( (string) $_GET['siwmfa_updated'] ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- notice flag only.
 		$map   = array(
-			'form'   => \__( 'Annotations saved.', 'silvaitamar-form-annotator-for-webmcp' ),
-			'bulk'   => \__( 'Selected forms updated.', 'silvaitamar-form-annotator-for-webmcp' ),
-			'toggle' => \__( 'Form status updated.', 'silvaitamar-form-annotator-for-webmcp' ),
+			'form'   => \__( 'Annotations saved. Page caches were asked to purge so visitors see the new attributes.', 'silvaitamar-form-annotator-for-webmcp' ),
+			'bulk'   => \__( 'Selected forms updated. Page caches were asked to purge so visitors see the new attributes.', 'silvaitamar-form-annotator-for-webmcp' ),
+			'toggle' => \__( 'Form status updated. Page caches were asked to purge so visitors see the new attributes.', 'silvaitamar-form-annotator-for-webmcp' ),
 		);
 
 		if ( isset( $map[ $which ] ) ) {

@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.2] - 2026-09-08
+
+### Added
+
+- After annotation enable/save/bulk toggle, request a page-cache purge (`litespeed_purge_all`, `siwmfa_purge_caches`, and a few common full-page cache helpers when present) so visitors are less likely to see stale form markup without WebMCP attributes.
+- Compatibility notes for full-page cache and PageSpeed Insights vs local WebMCP verification (`docs/COMPATIBILITY.md`).
+
+### Changed
+
+- Admin success notices mention that page caches were asked to purge.
+
 ## [1.0.1] - 2026-08-22
 
 ### Changed
@@ -31,5 +42,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Lead and support forms never use `toolautosubmit`.
 - This plugin does not ship a contact form (lab-only in `wp-webmcp-forms`).
 
+[1.0.2]: https://github.com/silvaitamar/wp-form-annotator-for-webmcp/releases/tag/v1.0.2
 [1.0.1]: https://github.com/silvaitamar/wp-form-annotator-for-webmcp/releases/tag/v1.0.1
 [1.0.0]: https://github.com/silvaitamar/wp-form-annotator-for-webmcp/releases/tag/v1.0.0

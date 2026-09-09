@@ -4,7 +4,7 @@ Tags: forms, contact-form, ai, chrome, webmcp
 Requires at least: 6.4
 Tested up to: 7.1
 Requires PHP: 8.0
-Stable tag: 1.0.1
+Stable tag: 1.0.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -98,6 +98,10 @@ This plugin stores annotation settings and an optional Origin Trial token in the
 
 == Changelog ==
 
+= 1.0.2 =
+* After enabling or saving annotations, request a page-cache purge (LiteSpeed and common helpers) so visitors see WebMCP attributes sooner.
+* Compatibility notes for full-page cache and PageSpeed Insights vs local WebMCP checks.
+
 = 1.0.1 =
 * Display name only: Form Annotator for WebMCP (slug and text domain unchanged).
 
@@ -109,6 +113,9 @@ This plugin stores annotation settings and an optional Origin Trial token in the
 * Tested up to WordPress 7.1.
 
 == Upgrade Notice ==
+
+= 1.0.2 =
+Purges common page caches after annotation changes. Recommended if you use LiteSpeed Cache or similar.
 
 = 1.0.1 =
 Display name update only. No settings or database changes.
