@@ -8,9 +8,13 @@
 namespace Siwmfa;
 
 use Siwmfa\Adapters\Contact_Form_7;
+use Siwmfa\Adapters\Filter_Everything;
 use Siwmfa\Adapters\Fluent_Forms;
 use Siwmfa\Adapters\Forminator;
+use Siwmfa\Adapters\Jetpack_Forms;
 use Siwmfa\Adapters\Ninja_Forms;
+use Siwmfa\Adapters\Search_Filter;
+use Siwmfa\Adapters\Search_Form;
 use Siwmfa\Adapters\SureForms;
 use Siwmfa\Adapters\WPForms;
 use Siwmfa\Admin\Settings;
@@ -46,5 +50,9 @@ final class Plugin {
 		Forminator::register();
 		Ninja_Forms::register();
 		SureForms::register();
+		Jetpack_Forms::register();
+		Search_Form::register();
+		Filter_Everything::register();
+		Search_Filter::register();
 	}
 }

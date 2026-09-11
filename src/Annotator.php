@@ -40,6 +40,7 @@ final class Annotator {
 			if ( 'form' === $tag ) {
 				$tags[ $tag ]['toolname']        = true;
 				$tags[ $tag ]['tooldescription'] = true;
+				$tags[ $tag ]['toolautosubmit']  = true;
 			}
 			$tags[ $tag ]['toolparamdescription'] = true;
 		}
@@ -50,7 +51,7 @@ final class Annotator {
 	/**
 	 * Builds toolname and tooldescription attributes for a form tag.
 	 *
-	 * @param array{toolname: string, tooldescription: string, params?: array<string, string>} $config Form config.
+	 * @param array{toolname: string, tooldescription: string, params?: array<string, string>, toolautosubmit?: bool} $config Form config.
 	 * @return array<string, string>
 	 */
 	public static function form_attributes( array $config ): array {
@@ -60,6 +61,9 @@ final class Annotator {
 		}
 		if ( isset( $config['tooldescription'] ) && \is_string( $config['tooldescription'] ) && '' !== $config['tooldescription'] ) {
 			$attrs['tooldescription'] = $config['tooldescription'];
+		}
+		if ( ! empty( $config['toolautosubmit'] ) ) {
+			$attrs['toolautosubmit'] = 'true';
 		}
 		return $attrs;
 	}
@@ -72,7 +76,8 @@ final class Annotator {
 	 * @return string
 	 */
 	public static function inject_form_tag( string $html, array $config ): string {
-		if ( false !== \stripos( $html, 'toolname=' ) ) {
+		// Idempotent only for the first <form> — later forms (e.g. FE after site search) may still need attrs.
+		if ( 1 === \preg_match( '/<form\b[^>]*>/i', $html, $m ) && false !== \stripos( $m[0], 'toolname=' ) ) {
 			return $html;
 		}
 

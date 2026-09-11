@@ -2,14 +2,14 @@
 # This file is distributed under the GPL-2.0-or-later.
 msgid ""
 msgstr ""
-"Project-Id-Version: Form Annotator for WebMCP 1.0.2\n"
+"Project-Id-Version: Form Annotator for WebMCP 1.1.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/silvaitamar-form-annotator-for-webmcp\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-08-12T02:45:25+00:00\n"
+"POT-Creation-Date: 2026-09-11T00:06:13+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: silvaitamar-form-annotator-for-webmcp\n"
@@ -40,11 +40,46 @@ msgstr ""
 msgid "https://github.com/silvaitamar"
 msgstr ""
 
+#: src/Adapters/Filter_Everything.php:86
+msgid "(untitled Filter Everything set)"
+msgstr ""
+
+#: src/Adapters/Filter_Everything.php:88
+msgid "Filter search query"
+msgstr ""
+
 #. translators: %d: form ID
 #: src/Adapters/Forminator.php:78
 #: src/Adapters/Ninja_Forms.php:85
 #, php-format
 msgid "Form %d"
+msgstr ""
+
+#: src/Adapters/Jetpack_Forms.php:98
+msgid "(untitled Jetpack form)"
+msgstr ""
+
+#: src/Adapters/Search_Filter.php:69
+#: src/Form_Catalog.php:127
+msgid "Search & Filter"
+msgstr ""
+
+#: src/Adapters/Search_Filter.php:71
+#: src/Adapters/Search_Form.php:60
+msgid "Search query"
+msgstr ""
+
+#: src/Adapters/Search_Filter.php:72
+msgid "Category"
+msgstr ""
+
+#: src/Adapters/Search_Filter.php:73
+msgid "Tag"
+msgstr ""
+
+#: src/Adapters/Search_Form.php:58
+#: src/Form_Catalog.php:123
+msgid "Site search"
 msgstr ""
 
 #: src/Admin/Form_Editor.php:29
@@ -55,61 +90,74 @@ msgstr ""
 msgid "This form is no longer available. It may have been deleted in the form plugin."
 msgstr ""
 
-#: src/Admin/Form_Editor.php:45
+#: src/Admin/Form_Editor.php:44
+#: src/Registry.php:293
+msgid "Searches this site. Submits the search form with the query."
+msgstr ""
+
+#: src/Admin/Form_Editor.php:49
 msgid "Back to forms"
 msgstr ""
 
-#: src/Admin/Form_Editor.php:59
+#: src/Admin/Form_Editor.php:63
 msgid "Annotate this form"
 msgstr ""
 
-#: src/Admin/Form_Editor.php:63
+#: src/Admin/Form_Editor.php:67
 msgid "Inject WebMCP attributes when this form is rendered."
 msgstr ""
 
-#: src/Admin/Form_Editor.php:69
+#: src/Admin/Form_Editor.php:73
 #: src/Admin/Form_List.php:113
 msgid "Tool name"
 msgstr ""
 
-#: src/Admin/Form_Editor.php:73
+#: src/Admin/Form_Editor.php:77
 msgid "Lowercase letters, numbers, and underscores. Shown to the browser agent."
 msgstr ""
 
-#: src/Admin/Form_Editor.php:78
+#: src/Admin/Form_Editor.php:82
 msgid "Tool description"
 msgstr ""
 
-#: src/Admin/Form_Editor.php:82
+#: src/Admin/Form_Editor.php:86
 msgid "Tell the agent what the form is for. Lead and support forms must not auto-submit."
 msgstr ""
 
-#: src/Admin/Form_Editor.php:88
-msgid "Field descriptions"
-msgstr ""
-
-#: src/Admin/Form_Editor.php:89
-msgid "These become the toolparamdescription attribute on each control. Use the HTML name as shown."
-msgstr ""
-
-#: src/Admin/Form_Editor.php:93
-msgid "Field"
-msgstr ""
-
-#: src/Admin/Form_Editor.php:94
-msgid "Label"
+#: src/Admin/Form_Editor.php:91
+msgid "Auto-submit"
 msgstr ""
 
 #: src/Admin/Form_Editor.php:95
+msgid "Allow toolautosubmit on this search or filter form (idempotent GET). Never enable this on lead or support forms."
+msgstr ""
+
+#: src/Admin/Form_Editor.php:103
+msgid "Field descriptions"
+msgstr ""
+
+#: src/Admin/Form_Editor.php:104
+msgid "These become the toolparamdescription attribute on each control. Use the HTML name as shown."
+msgstr ""
+
+#: src/Admin/Form_Editor.php:108
+msgid "Field"
+msgstr ""
+
+#: src/Admin/Form_Editor.php:109
+msgid "Label"
+msgstr ""
+
+#: src/Admin/Form_Editor.php:110
 msgctxt "Column header: WebMCP HTML attribute name on form fields"
 msgid "toolparamdescription"
 msgstr ""
 
-#: src/Admin/Form_Editor.php:116
+#: src/Admin/Form_Editor.php:131
 msgid "This form has no annotatable fields."
 msgstr ""
 
-#: src/Admin/Form_Editor.php:119
+#: src/Admin/Form_Editor.php:134
 msgid "Save annotations"
 msgstr ""
 
@@ -118,7 +166,7 @@ msgid "Enable a form, then open it to set the tool name, description, and field 
 msgstr ""
 
 #: src/Admin/Form_List.php:47
-msgid "No supported forms found. Install and create a form in Contact Form 7, Fluent Forms, WPForms, Forminator, Ninja Forms, or SureForms, then return here."
+msgid "No supported forms found. Install and create a form in Contact Form 7, Fluent Forms, WPForms, Forminator, Ninja Forms, SureForms, or Jetpack Forms — or use Site search, Filter Everything, or Search & Filter — then return here."
 msgstr ""
 
 #: src/Admin/Form_List.php:55
@@ -261,36 +309,52 @@ msgstr ""
 msgid "Save Origin Trial token"
 msgstr ""
 
-#: src/Form_Catalog.php:101
+#: src/Form_Catalog.php:109
 msgid "Contact Form 7"
 msgstr ""
 
-#: src/Form_Catalog.php:103
+#: src/Form_Catalog.php:111
 msgid "Fluent Forms"
 msgstr ""
 
-#: src/Form_Catalog.php:105
+#: src/Form_Catalog.php:113
 msgid "WPForms"
 msgstr ""
 
-#: src/Form_Catalog.php:107
+#: src/Form_Catalog.php:115
 msgid "Forminator"
 msgstr ""
 
-#: src/Form_Catalog.php:109
+#: src/Form_Catalog.php:117
 msgid "Ninja Forms"
 msgstr ""
 
-#: src/Form_Catalog.php:111
+#: src/Form_Catalog.php:119
 msgid "SureForms"
 msgstr ""
 
-#: src/Registry.php:234
+#: src/Form_Catalog.php:121
+msgid "Jetpack Forms"
+msgstr ""
+
+#: src/Form_Catalog.php:125
+msgid "Filter Everything"
+msgstr ""
+
+#: src/Registry.php:243
 msgid "contact form"
 msgstr ""
 
 #. translators: %s: form title
-#: src/Registry.php:239
+#: src/Registry.php:248
 #, php-format
 msgid "Fills the \"%s\" form on this page. Use for lead, contact, or support requests. Do not submit the form — only fill the fields."
+msgstr ""
+
+#: src/Registry.php:289
+msgid "Applies Filter Everything facets that render as a GET form. Idempotent."
+msgstr ""
+
+#: src/Registry.php:291
+msgid "Runs a Search & Filter query on this site. Idempotent."
 msgstr ""

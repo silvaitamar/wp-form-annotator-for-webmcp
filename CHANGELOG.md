@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.0] - 2026-09-10
+
+### Added
+
+- Soft-dep adapter for **Jetpack Forms** synced library forms (`jetpack_form` CPT + `ref`).
+- **Site search** adapter — annotates existing theme/`core/search` markup only (does not ship a search UI); optional `toolautosubmit`.
+- Soft-dep adapters for **Filter Everything** and **Search & Filter** (wp.org free).
+- Fixtures and compatibility notes for Jetpack Forms, site search, and the two filter plugins.
+
 ## [1.0.2] - 2026-09-08
 
 ### Added
@@ -42,6 +51,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Lead and support forms never use `toolautosubmit`.
 - This plugin does not ship a contact form (lab-only in `wp-webmcp-forms`).
 
+[1.1.0]: https://github.com/silvaitamar/wp-form-annotator-for-webmcp/releases/tag/v1.1.0
 [1.0.2]: https://github.com/silvaitamar/wp-form-annotator-for-webmcp/releases/tag/v1.0.2
 [1.0.1]: https://github.com/silvaitamar/wp-form-annotator-for-webmcp/releases/tag/v1.0.1
 [1.0.0]: https://github.com/silvaitamar/wp-form-annotator-for-webmcp/releases/tag/v1.0.0

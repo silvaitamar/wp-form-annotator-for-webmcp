@@ -111,6 +111,13 @@ siwmfa_assert( false !== strpos( $wpforms_out, 'toolparamdescription="Full name"
 
 siwmfa_assert( 'cf7:6' === \Siwmfa\Registry::make_key( 'cf7', 6 ), 'make_key joins builder and id' );
 siwmfa_assert( array( 'builder' => 'fluent', 'id' => 4 ) === \Siwmfa\Registry::parse_key( 'fluent:4' ), 'parse_key accepts fluent:4' );
+siwmfa_assert( array( 'builder' => 'jetpack', 'id' => 12 ) === \Siwmfa\Registry::parse_key( 'jetpack:12' ), 'parse_key accepts jetpack:12' );
+siwmfa_assert( array( 'builder' => 'search', 'id' => 1 ) === \Siwmfa\Registry::parse_key( 'search:1' ), 'parse_key accepts search:1' );
+siwmfa_assert( array( 'builder' => 'filtereverything', 'id' => 9 ) === \Siwmfa\Registry::parse_key( 'filtereverything:9' ), 'parse_key accepts filtereverything:9' );
+siwmfa_assert( array( 'builder' => 'searchfilter', 'id' => 1 ) === \Siwmfa\Registry::parse_key( 'searchfilter:1' ), 'parse_key accepts searchfilter:1' );
+siwmfa_assert( true === \Siwmfa\Registry::allows_autosubmit( 'search' ), 'allows_autosubmit for search' );
+siwmfa_assert( false === \Siwmfa\Registry::allows_autosubmit( 'jetpack' ), 'allows_autosubmit rejects jetpack' );
+siwmfa_assert( null === \Siwmfa\Registry::parse_key( 'catalog:1' ), 'parse_key rejects catalog' );
 siwmfa_assert( null === \Siwmfa\Registry::parse_key( 'native:1' ), 'parse_key rejects unknown builder' );
 siwmfa_assert( null === \Siwmfa\Registry::parse_key( 'cf7:nope' ), 'parse_key rejects non-numeric id' );
 
@@ -124,6 +131,7 @@ $normalized = \Siwmfa\Registry::normalize(
 		'enabled'         => '1',
 		'toolname'        => 'Submit Contact',
 		'tooldescription' => "Hello\nworld",
+		'toolautosubmit'  => '1',
 		'params'          => array(
 			'email' => 'Visitor email',
 			''      => 'skip',
@@ -133,8 +141,64 @@ $normalized = \Siwmfa\Registry::normalize(
 );
 siwmfa_assert( true === $normalized['enabled'], 'normalize casts enabled' );
 siwmfa_assert( 'submit_contact' === $normalized['toolname'], 'normalize sanitizes toolname' );
+siwmfa_assert( true === $normalized['toolautosubmit'], 'normalize casts toolautosubmit' );
 siwmfa_assert( isset( $normalized['params']['email'] ), 'normalize keeps string param keys' );
 siwmfa_assert( ! isset( $normalized['params'][''] ), 'normalize drops empty param keys' );
+
+$lead_normalized = \Siwmfa\Registry::normalize(
+	array(
+		'enabled'        => true,
+		'toolname'       => 'submit_contact',
+		'toolautosubmit' => '1',
+	),
+	'jetpack'
+);
+siwmfa_assert( false === $lead_normalized['toolautosubmit'], 'normalize strips toolautosubmit for lead builders' );
+
+$search_normalized = \Siwmfa\Registry::normalize(
+	array(
+		'enabled'        => true,
+		'toolname'       => 'search_site',
+		'toolautosubmit' => '1',
+	),
+	'search'
+);
+siwmfa_assert( true === $search_normalized['toolautosubmit'], 'normalize keeps toolautosubmit for search' );
+siwmfa_assert( true === \Siwmfa\Registry::allows_autosubmit( 'filtereverything' ), 'allows_autosubmit for filtereverything' );
+siwmfa_assert( true === \Siwmfa\Registry::allows_autosubmit( 'searchfilter' ), 'allows_autosubmit for searchfilter' );
+siwmfa_assert( 'filter_everything' === \Siwmfa\Registry::suggest_filter_toolname( 'filtereverything' ), 'suggest_filter_toolname for FE' );
+siwmfa_assert( 'search_and_filter' === \Siwmfa\Registry::suggest_filter_toolname( 'searchfilter' ), 'suggest_filter_toolname for SF' );
+
+$multi_form = '<form role="search"><input name="s"></form><div class="wpc-filter-set-9"><form method="get"><input name="srch"></form></div>';
+$fe_only    = \Siwmfa\Annotator::inject_form_tag(
+	'<div class="wpc-filter-set-9"><form method="get"><input name="srch"></form></div>',
+	array(
+		'toolname'        => 'filter_everything',
+		'tooldescription' => 'Filter',
+		'toolautosubmit'  => true,
+	)
+);
+siwmfa_assert( false !== strpos( $fe_only, 'toolname="filter_everything"' ), 'inject_form_tag annotates FE fragment' );
+siwmfa_assert( false !== strpos( $fe_only, 'toolautosubmit="true"' ), 'inject_form_tag emits toolautosubmit on FE fragment' );
+
+$search_then_fe = \Siwmfa\Annotator::inject_form_tag(
+	$multi_form,
+	array(
+		'toolname'        => 'search_site',
+		'tooldescription' => 'Search',
+		'toolautosubmit'  => true,
+	)
+);
+siwmfa_assert( 1 === substr_count( $search_then_fe, 'toolname=' ), 'inject_form_tag only touches first form when called on full HTML' );
+
+$search_attrs = \Siwmfa\Annotator::form_attributes(
+	array(
+		'toolname'        => 'search_site',
+		'tooldescription' => 'Search',
+		'toolautosubmit'  => true,
+	)
+);
+siwmfa_assert( 'true' === ( $search_attrs['toolautosubmit'] ?? '' ), 'form_attributes emits toolautosubmit' );
 
 echo "\n{$siwmfa_passed} passed, {$siwmfa_failed} failed\n";
 exit( $siwmfa_failed > 0 ? 1 : 0 );

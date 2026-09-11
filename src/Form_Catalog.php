@@ -8,9 +8,13 @@
 namespace Siwmfa;
 
 use Siwmfa\Adapters\Contact_Form_7;
+use Siwmfa\Adapters\Filter_Everything;
 use Siwmfa\Adapters\Fluent_Forms;
 use Siwmfa\Adapters\Forminator;
+use Siwmfa\Adapters\Jetpack_Forms;
 use Siwmfa\Adapters\Ninja_Forms;
+use Siwmfa\Adapters\Search_Filter;
+use Siwmfa\Adapters\Search_Form;
 use Siwmfa\Adapters\SureForms;
 use Siwmfa\Adapters\WPForms;
 
@@ -86,6 +90,10 @@ final class Form_Catalog {
 			Forminator::class,
 			Ninja_Forms::class,
 			SureForms::class,
+			Jetpack_Forms::class,
+			Search_Form::class,
+			Filter_Everything::class,
+			Search_Filter::class,
 		);
 	}
 
@@ -109,6 +117,14 @@ final class Form_Catalog {
 				return \__( 'Ninja Forms', 'silvaitamar-form-annotator-for-webmcp' );
 			case SureForms::BUILDER:
 				return \__( 'SureForms', 'silvaitamar-form-annotator-for-webmcp' );
+			case Jetpack_Forms::BUILDER:
+				return \__( 'Jetpack Forms', 'silvaitamar-form-annotator-for-webmcp' );
+			case Search_Form::BUILDER:
+				return \__( 'Site search', 'silvaitamar-form-annotator-for-webmcp' );
+			case Filter_Everything::BUILDER:
+				return \__( 'Filter Everything', 'silvaitamar-form-annotator-for-webmcp' );
+			case Search_Filter::BUILDER:
+				return \__( 'Search & Filter', 'silvaitamar-form-annotator-for-webmcp' );
 			default:
 				return $builder;
 		}

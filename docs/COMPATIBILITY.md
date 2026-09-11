@@ -10,12 +10,18 @@ Generic notes for WordPress.org / GitHub. No staging URLs or client names.
 | Forminator | `Forminator_API` | `forminator_render_form_markup` | Param keys = element ids (`email-1`, …) |
 | Ninja Forms | `Ninja_Forms` | Post-JS `nfFormReady` | `<form>` is Backbone. Listselect/textarea templates honor `custom_name_attribute`; default names are `nf-field-{id}` |
 | SureForms | `SRFM_VER` / CPT | `srfm/form` block + shortcode + `render_block` | The `<form>` is printed in PHP (`get_form_markup`); field attrs come from inner blocks. Dropdowns: strip Tom Select hidden `name` / `aria-hidden` so the native `<select>` is the WebMCP param |
+| Jetpack Forms | `jetpack_form` CPT or `Contact_Form` class | `jetpack_contact_form_html` + `grunion_contact_form_field_html` | **Synced forms only** (CPT `jetpack_form` + block/shortcode `ref`). Activate Jetpack module **Forms** (`contact-form`). Inline forms with computed page IDs are out of v1.1. Prefer explicit field **Name/ID** in the block Advanced panel so `toolparamdescription` keys stay stable. |
+| Site search | Always (core/theme) | `get_search_form` + `render_block_core/search` | Does **not** ship a search UI — only annotates the theme/core form that already exists. Virtual `search:1`. May use `toolautosubmit` (idempotent GET). |
+| Filter Everything | `FLRT_FILTERS_SET_POST_TYPE` / `filter-set` | `do_shortcode_tag` (`fe_widget`) + `the_content` | Soft-dep. Annotates **GET `<form>`** nodes inside a set (search field, range, date, sorting). Link-only facets are out of scope for declarative WebMCP. Prefer `[fe_widget id="SET_ID"]` in content. For `toolautosubmit`, keep the Filter Set **Apply button** off — Apply mode makes FE `preventDefault` submit (AJAX path) and breaks WebMCP. |
+| Search & Filter | `SearchAndFilter` / shortcode | `do_shortcode_tag` (`searchandfilter`) + `the_content` | Soft-dep. Virtual `searchfilter:1`. Field names use prefix `of` (`ofsearch`, …). |
 
-This plugin does **not** ship a contact form. Native HTML/shortcode forms belong in the lab (`wp-webmcp-forms`), not the wp.org product.
+This plugin does **not** ship a contact form, search UI, or directory filter. It only annotates forms from WordPress core/theme search and from supported plugins.
+
+**Out of v1.1 (future / UC4):** FacetWP, SearchWP, HUSKY/YITH/BeRocket (Woo filters). Homegrown HTML filter conventions are lab-only, not product builders.
 
 WordPress: 6.4 through **7.1**. PHP 8.0+.
 
-Lead and support tools never auto-submit. Search/`toolautosubmit` is out of v1 (planned v1.1).
+Lead and support tools never auto-submit. Site search, Filter Everything GET forms, and Search & Filter may use `toolautosubmit` when enabled. For Search & Filter, keep the tool description explicit: one call with all parameters; category/tag values are select option IDs (`0` = all), never empty strings.
 
 ## Page cache (LiteSpeed and similar)
 

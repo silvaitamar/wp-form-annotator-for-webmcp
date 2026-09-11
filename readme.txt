@@ -4,7 +4,7 @@ Tags: forms, contact-form, ai, chrome, webmcp
 Requires at least: 6.4
 Tested up to: 7.1
 Requires PHP: 8.0
-Stable tag: 1.0.2
+Stable tag: 1.1.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -18,9 +18,9 @@ It is for site owners who already use a form plugin and want agents to fill lead
 
 = How it works =
 
-1. Create a form in a supported builder (Contact Form 7, Fluent Forms, WPForms, Forminator, Ninja Forms, or SureForms).
+1. Create a form in a supported builder (Contact Form 7, Fluent Forms, WPForms, Forminator, Ninja Forms, SureForms, or Jetpack Forms), or annotate Site search / Filter Everything / Search & Filter.
 2. Open **Settings → Form Annotator**, enable the form (one by one or in bulk), then **Annotate** to set the tool name, description, and field text.
-3. On the front end the plugin injects WebMCP attributes into the real `<form>` markup. Lead and support forms never use `toolautosubmit` — a human confirms send.
+3. On the front end the plugin injects WebMCP attributes into the real `<form>` markup. Lead and support forms never use `toolautosubmit` — a human confirms send. Site search, Filter Everything, and Search & Filter may allow `toolautosubmit` (idempotent GET).
 
 = What this plugin does =
 
@@ -28,11 +28,11 @@ It is for site owners who already use a form plugin and want agents to fill lead
 * A settings list with search, builder/status filters, pagination, and bulk enable/disable.
 * A single-form editor for tool name, tool description, and per-field `toolparamdescription`.
 * Optional Chrome Origin Trial token (printed in `wp_head` when set).
-* Soft dependencies: each adapter loads only when that form plugin is active.
+* Soft dependencies: each adapter loads only when that form plugin is active (Site search is always listed).
 
 = Supported form plugins =
 
-Contact Form 7, Fluent Forms, WPForms, Forminator, Ninja Forms, and SureForms. You must install a builder and create a form; this plugin does not ship its own contact form.
+Contact Form 7, Fluent Forms, WPForms, Forminator, Ninja Forms, SureForms, and Jetpack Forms (synced forms in the Forms library). Also annotates Site search (theme / core search block — does not ship a search UI), Filter Everything, and Search & Filter. You must install a builder and create a form for lead tools; this plugin does not ship its own contact form.
 
 = What this plugin does not do =
 
@@ -98,6 +98,12 @@ This plugin stores annotation settings and an optional Origin Trial token in the
 
 == Changelog ==
 
+= 1.1.0 =
+* Jetpack Forms adapter for synced forms (CPT `jetpack_form` / `ref`).
+* Site search annotation for existing theme / `core/search` markup (optional `toolautosubmit`; does not ship a search UI).
+* Soft-dep adapters for Filter Everything and Search & Filter (free wp.org plugins).
+* Compatibility and Execute Tool docs for Jetpack, search, and filter builders.
+
 = 1.0.2 =
 * After enabling or saving annotations, request a page-cache purge (LiteSpeed and common helpers) so visitors see WebMCP attributes sooner.
 * Compatibility notes for full-page cache and PageSpeed Insights vs local WebMCP checks.
@@ -113,6 +119,9 @@ This plugin stores annotation settings and an optional Origin Trial token in the
 * Tested up to WordPress 7.1.
 
 == Upgrade Notice ==
+
+= 1.1.0 =
+Adds Jetpack Forms, Site search annotation (theme/core only), Filter Everything, and Search & Filter (toolautosubmit on search/filter only).
 
 = 1.0.2 =
 Purges common page caches after annotation changes. Recommended if you use LiteSpeed Cache or similar.

@@ -44,7 +44,7 @@ final class Form_List {
 
 		<?php if ( array() === $all ) : ?>
 			<p>
-				<?php echo \esc_html__( 'No supported forms found. Install and create a form in Contact Form 7, Fluent Forms, WPForms, Forminator, Ninja Forms, or SureForms, then return here.', 'silvaitamar-form-annotator-for-webmcp' ); ?>
+				<?php echo \esc_html__( 'No supported forms found. Install and create a form in Contact Form 7, Fluent Forms, WPForms, Forminator, Ninja Forms, SureForms, or Jetpack Forms — or use Site search, Filter Everything, or Search & Filter — then return here.', 'silvaitamar-form-annotator-for-webmcp' ); ?>
 			</p>
 			<?php
 			return;

@@ -36,10 +36,16 @@ final class Form_Editor {
 			return;
 		}
 
-		$config   = Registry::get( $parts['builder'], $parts['id'] );
-		$toolname = '' !== $config['toolname'] ? $config['toolname'] : Registry::suggest_toolname( $form['title'] );
-		$desc     = '' !== $config['tooldescription'] ? $config['tooldescription'] : Registry::suggest_description( $form['title'] );
-		$back     = Settings::page_url( array( 'siwmfa_tab' => 'forms' ) );
+		$config  = Registry::get( $parts['builder'], $parts['id'] );
+		$filters = Registry::allows_autosubmit( $parts['builder'] );
+		if ( $filters ) {
+			$toolname = '' !== $config['toolname'] ? $config['toolname'] : Registry::suggest_filter_toolname( $parts['builder'] );
+			$desc     = '' !== $config['tooldescription'] ? $config['tooldescription'] : Registry::suggest_filter_description( $parts['builder'] );
+		} else {
+			$toolname = '' !== $config['toolname'] ? $config['toolname'] : Registry::suggest_toolname( $form['title'] );
+			$desc     = '' !== $config['tooldescription'] ? $config['tooldescription'] : Registry::suggest_description( $form['title'] );
+		}
+		$back = Settings::page_url( array( 'siwmfa_tab' => 'forms' ) );
 		?>
 		<p>
 			<a href="<?php echo \esc_url( $back ); ?>">&larr; <?php echo \esc_html__( 'Back to forms', 'silvaitamar-form-annotator-for-webmcp' ); ?></a>
@@ -49,6 +55,16 @@ final class Form_Editor {
 			<?php echo \esc_html( $form['title'] ); ?>
 			<span class="description">— <?php echo \esc_html( Form_Catalog::builder_label( $form['builder'] ) ); ?> #<?php echo \esc_html( (string) $form['id'] ); ?></span>
 		</h2>
+
+		<?php if ( 'filtereverything' === $parts['builder'] ) : ?>
+			<div class="notice notice-info inline"><p>
+				<?php echo \esc_html__( 'For toolautosubmit, keep the Filter Set Apply button off. Apply mode uses AJAX (preventDefault) and breaks WebMCP navigation.', 'silvaitamar-form-annotator-for-webmcp' ); ?>
+			</p></div>
+		<?php elseif ( 'searchfilter' === $parts['builder'] ) : ?>
+			<div class="notice notice-info inline"><p>
+				<?php echo \esc_html__( 'Category and tag selects use term IDs (or "0" for All). Never send empty strings for those fields.', 'silvaitamar-form-annotator-for-webmcp' ); ?>
+			</p></div>
+		<?php endif; ?>
 
 		<form method="post" action="<?php echo \esc_url( Settings::page_url( array( 'siwmfa_tab' => 'forms' ) ) ); ?>" class="siwmfa-form-editor">
 			<?php \wp_nonce_field( 'siwmfa_save_form' ); ?>
@@ -82,6 +98,17 @@ final class Form_Editor {
 						<p class="description"><?php echo \esc_html__( 'Tell the agent what the form is for. Lead and support forms must not auto-submit.', 'silvaitamar-form-annotator-for-webmcp' ); ?></p>
 					</td>
 				</tr>
+				<?php if ( $filters ) : ?>
+				<tr>
+					<th scope="row"><?php echo \esc_html__( 'Auto-submit', 'silvaitamar-form-annotator-for-webmcp' ); ?></th>
+					<td>
+						<label>
+							<input type="checkbox" name="<?php echo \esc_attr( 'siwmfa_forms[' . $key . '][toolautosubmit]' ); ?>" value="1" <?php \checked( ! empty( $config['toolautosubmit'] ) || '' === $config['toolname'] ); ?> />
+							<?php echo \esc_html__( 'Allow toolautosubmit on this search or filter form (idempotent GET). Never enable this on lead or support forms.', 'silvaitamar-form-annotator-for-webmcp' ); ?>
+						</label>
+					</td>
+				</tr>
+				<?php endif; ?>
 			</table>
 
 			<?php if ( array() !== $form['fields'] ) : ?>
